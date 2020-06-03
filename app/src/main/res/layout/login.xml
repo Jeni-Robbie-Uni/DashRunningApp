@@ -63,35 +63,17 @@
         tools:layout_editor_absoluteY="180dp" />
 
 
-    <TextView
-        android:id="@+id/company_slogan2"
-        android:layout_width="196dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-
-        android:layout_marginStart="54dp"
-        android:layout_marginEnd="109dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/slogan"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.974"
-        app:layout_constraintStart_toEndOf="@+id/dash_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="618dp" />
-
     <Button
         android:id="@+id/facebook_login_btn"
         style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
-        android:layout_width="229dp"
-        android:layout_height="46dp"
+        android:layout_width="233dp"
+        android:layout_height="52dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="Continue With Facebook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="495dp" />
+        tools:layout_editor_absoluteY="602dp" />
 
     <ImageView
         android:id="@+id/login_bg"
@@ -205,7 +187,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="463dp" />
+        tools:layout_editor_absoluteY="569dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -249,12 +231,29 @@
         tools:layout_editor_absoluteX="65dp"
         tools:layout_editor_absoluteY="403dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="411dp"
+    <TextView
+        android:id="@+id/regiister_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="638dp">
+        android:fontFamily="@font/montserrat"
+        android:text="No Account? "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="463dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/SignUpLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoText="false"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:fontFamily="@font/montserrat"
+        android:text="Sign Up Here!"
+        android:textIsSelectable="false"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="203dp"
+        tools:layout_editor_absoluteY="463dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
