@@ -1,93 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".login">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="-21dp"
-        android:layout_marginBottom="-1dp"
-        android:minHeight="40dp"
-        app:srcCompat="@drawable/blue_rectangles" />
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-3dp"
-        android:layout_marginEnd="-3dp"
-        android:layout_marginBottom="694dp"
+        android:id="@+id/bottom_banner"
+        android:layout_width="417dp"
+        android:layout_height="52dp"
         android:minHeight="40dp"
-        app:srcCompat="@drawable/blue_rectangles" />
+        app:srcCompat="@drawable/blue_rectangles"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="722dp" />
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="280dp"
-        android:layout_height="99dp"
-        android:layout_alignParentTop="true"
+        android:id="@+id/top_banner"
+        android:layout_width="412dp"
+        android:layout_height="52dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:minHeight="40dp"
+        app:srcCompat="@drawable/blue_rectangles"
+        tools:layout_editor_absoluteX="1dp" />
+
+
+    <ImageView
+        android:id="@+id/dash_logo"
+        android:layout_width="287dp"
+        android:layout_height="115dp"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="576dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/dash_icon1" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/company_slogan"
+        android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="173dp"
+
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="109dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/slogan"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/dash_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="180dp" />
 
-        android:textStyle="italic" />
-
-    <Button
-        android:id="@+id/button2"
-        style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="93dp"
-        android:layout_marginBottom="433dp"
-        android:text="Continue With Facebook" />
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="260dp"
-        android:layout_height="143dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="71dp"
-        android:layout_marginBottom="242dp"
-        app:srcCompat="@drawable/curve_rectangle" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/company_slogan2"
+        android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="385dp"
-        android:fontFamily="@font/montserrat"
-        android:text="Alternatively"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        android:layout_centerHorizontal="true"
 
-</RelativeLayout>
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="109dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/slogan"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.974"
+        app:layout_constraintStart_toEndOf="@+id/dash_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="618dp" />
+
+    <Button
+        android:id="@+id/facebook_login_btn"
+        style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
+        android:layout_width="229dp"
+        android:layout_height="46dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Continue With Facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="495dp" />
+
+    <ImageView
+        android:id="@+id/login_bg"
+        android:layout_width="332dp"
+        android:layout_height="193dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/curve_rectangle"
+        tools:layout_editor_absoluteY="252dp" />
+
+    <ImageView
+        android:id="@+id/textentry_bg2"
+        android:layout_width="303dp"
+        android:layout_height="41dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.465"
+        app:srcCompat="@drawable/white_rect_curve" />
+
+    <ImageView
+        android:id="@+id/textentry_bg"
+        android:layout_width="309dp"
+        android:layout_height="38dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/white_rect_curve"
+        tools:layout_editor_absoluteY="296dp" />
+
+    <TextView
+        android:id="@+id/login_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/montserrat"
+        android:text="Log in"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.159"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="263dp" />
+
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:background="@drawable/button_shape"
+        android:fontFamily="@font/montserrat"
+        android:text="Log In"
+        android:textColor="@color/white"
+        android:textScaleX="@dimen/activity_horizontal_margin"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="278dp"
+        tools:layout_editor_absoluteY="404dp" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:inputType="textEmailAddress"
+        android:text="example@gmail.com"
+        android:textAppearance="@style/FirebaseUI"
+        android:textColor="@color/fui_bgGitHub"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.402" />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:inputType="textPassword"
+        android:text="example@gmail.com"
+        android:textAppearance="@style/FirebaseUI"
+        android:textColor="@color/fui_bgGitHub"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.466" />
+
+
+    <TextView
+        android:id="@+id/login_instruct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/montserrat"
+        android:text="OR"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="463dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgotten Password? "
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="403dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="638dp">
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
