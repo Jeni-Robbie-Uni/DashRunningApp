@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "162024452276",
+    "firebase_url": "https://dash-running-app.firebaseio.com",
+    "project_id": "dash-running-app",
+    "storage_bucket": "dash-running-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162024452276:android:fff5e9ef7644cd7e6a27e1",
+        "android_client_info": {
+          "package_name": "com.example.dashrunningapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162024452276-bctrf1gujiepvo2uakl0denjgvvls1ok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS63o45nVL81uryBAF7paXKZp7nZPQYfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162024452276-bctrf1gujiepvo2uakl0denjgvvls1ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
