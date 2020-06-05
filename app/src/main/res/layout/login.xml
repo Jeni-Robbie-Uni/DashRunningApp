@@ -9,246 +9,231 @@
     tools:context=".login">
 
 
+
+    <ImageView
+        android:id="@+id/top_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@android:dimen/notification_large_icon_height"
+        app:srcCompat="@drawable/blue_rectangles" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/LogoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_banner">
+
+            <ImageView
+                android:id="@+id/dash_logo"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                app:srcCompat="@drawable/dash_icon1" />
+
+            <TextView
+                android:id="@+id/company_slogan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/dash_logo"
+                android:layout_alignStart="@+id/dash_logo"
+                android:layout_alignEnd="@+id/dash_logo"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="-25dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_horizontal"
+                android:text="@string/slogan"
+                android:textStyle="italic" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+
+            android:layout_below="@id/LogoView"
+            android:layout_above="@id/bottom_banner">
+
+            <RelativeLayout
+                android:id="@+id/login_bg"
+                android:layout_width="match_parent"
+
+                android:layout_height="200dp"
+                android:background="@drawable/curve_rectangle">
+
+                <TextView
+                    android:id="@+id/login_label"
+                    android:layout_width="69dp"
+                    android:layout_height="25dp"
+
+                    android:layout_marginStart="17dp"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Log in"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login_label"
+                    android:orientation="vertical">
+
+
+                    <EditText
+
+                        android:id="@+id/editEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_rect_curve"
+                        android:ems="10"
+                        android:fontFamily="sans-serif-thin"
+                        android:hint="example@gmail.com"
+                        android:inputType="textEmailAddress"
+                        android:textAppearance="@style/FirebaseUI"
+                        android:textAlignment="center"
+                        android:textColor="@color/fui_bgGitHub"
+                        android:textColorHighlight="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimaryDark"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+
+                    <EditText
+
+                        android:id="@+id/editPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/white_rect_curve"
+                        android:ems="10"
+                        android:fontFamily="sans-serif-thin"
+                        android:hint="Enter Password"
+                        android:textAlignment="center"
+                        android:inputType="textPassword"
+                        android:textAppearance="@style/FirebaseUI"
+                        android:textColor="@color/fui_bgGitHub"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="17dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:text="Forgotten Password? " />
+
+                        <Button
+                            android:id="@+id/button2"
+                            android:layout_width="73dp"
+                            android:layout_height="24dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="0.25"
+                            android:background="@drawable/button_shape"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Submit"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/login_bg"
+    android:layout_marginTop="15dp"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/registerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/regiister_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="No Account? " />
+
+        <Button
+            android:id="@+id/SignUpLink"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/montserrat"
+            android:text="Sign Up Here!"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/registerView"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/login_instruct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="OR"
+
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+
+            <Button
+                android:id="@+id/facebook_login_btn"
+                style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Continue With Facebook"
+                android:textSize="21sp" />
+    </LinearLayout>
+</RelativeLayout>
+
+    </RelativeLayout>
+
+
     <ImageView
         android:id="@+id/bottom_banner"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:minHeight="40dp"
         app:srcCompat="@drawable/blue_rectangles"
-        tools:layout_editor_absoluteY="721dp" />
-
-    <ImageView
-        android:id="@+id/top_banner"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="-4dp"
-        android:layout_marginBottom="-1dp"
-        android:minHeight="40dp"
-        app:srcCompat="@drawable/blue_rectangles" />
-
-
-    <ImageView
-        android:id="@+id/dash_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="159dp"
-        android:layout_below="@+id/bottom_banner"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="88dp"
-        android:scaleType="centerCrop"
-        android:foregroundGravity="center_horizontal"
-        app:srcCompat="@drawable/dash_icon1"
-        tools:layout_editor_absoluteX="63dp"
-        tools:layout_editor_absoluteY="85dp" />
-
-    <TextView
-        android:id="@+id/company_slogan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@+id/dash_logo"
-        android:layout_alignStart="@+id/dash_logo"
-        android:layout_alignEnd="@+id/dash_logo"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="-25dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_horizontal"
-        android:text="@string/slogan"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="180dp" />
-
-    <Button
-        android:id="@+id/facebook_login_btn"
-        style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_instruct"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="42dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Continue With Facebook"
-        android:textSize="21sp"
-        android:textStyle="normal"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="602dp" />
-
-    <ImageView
-        android:id="@+id/login_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="193dp"
-        android:layout_below="@+id/dash_logo"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        app:srcCompat="@drawable/curve_rectangle"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="252dp" />
-
-
-    <ImageView
-        android:id="@+id/textentry_bg2"
-
-        android:layout_height="33dp"
-
-        android:layout_above="@+id/textentry_bg"
-        android:layout_alignStart="@+id/login_bg"
-        android:layout_alignEnd="@+id/login_bg"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="21dp"
-        app:srcCompat="@drawable/white_rect_curve"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="342dp"
-        android:layout_width="wrap_content" />
-
-    <ImageView
-        android:id="@+id/textentry_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_alignStart="@+id/login_bg"
-        android:layout_alignEnd="@+id/login_bg"
-        android:layout_alignBottom="@+id/login_bg"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="55dp"
-        app:srcCompat="@drawable/white_rect_curve"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="296dp" />
-
-    <TextView
-        android:id="@+id/login_label"
-        android:layout_width="69dp"
-        android:layout_height="25dp"
-        android:layout_alignStart="@+id/login_bg"
-        android:layout_alignTop="@+id/login_bg"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="18dp"
-        android:fontFamily="@font/montserrat"
-        android:text="Log in"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="263dp" />
-
-
-    <EditText
-
-        android:id="@+id/editEmail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignStart="@+id/textentry_bg2"
-        android:layout_alignTop="@+id/textentry_bg2"
-        android:layout_alignEnd="@+id/textentry_bg2"
-        android:layout_alignBottom="@+id/textentry_bg2"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="-4dp"
-        android:ems="10"
-        android:fontFamily="sans-serif-thin"
-        android:inputType="textEmailAddress"
-        android:text="example@gmail.com"
-        android:textAppearance="@style/FirebaseUI"
-        android:textColor="@color/fui_bgGitHub"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="343dp" />
-    />
-
-    <EditText
-        android:id="@+id/editPassword"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignStart="@+id/textentry_bg"
-        android:layout_alignEnd="@+id/textentry_bg"
-        android:layout_alignBottom="@+id/textentry_bg"
-        android:layout_marginStart="11dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="-4dp"
-        android:ems="10"
-        android:fontFamily="@font/montserrat"
-        android:inputType="textPassword"
-        android:text="example@gmail.com"
-        android:textAppearance="@style/FirebaseUI"
-        android:textColor="@color/fui_bgGitHub"
-        android:textSize="12sp"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="296dp"/>
-
-    <TextView
-        android:id="@+id/login_instruct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SignUpLink"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="158dp"
-        android:fontFamily="@font/montserrat"
-        android:text="OR"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        tools:layout_editor_absoluteX="195dp"
-        tools:layout_editor_absoluteY="569dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/login_bg"
-        android:layout_alignBottom="@+id/login_bg"
-        android:layout_marginStart="17dp"
-        android:layout_marginBottom="21dp"
-        android:text="Forgotten Password? "
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="403dp" />
-
-    <TextView
-        android:id="@+id/regiister_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_bg"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/montserrat"
-        android:text="No Account? "
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="463dp" />
-
-
-    <TextView
-        android:id="@+id/SignUpLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_bg"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/regiister_label"
-        android:clickable="true"
-        android:cursorVisible="false"
-        android:focusable="true"
-        android:fontFamily="@font/montserrat"
-        android:text="Sign Up Here!"
-        android:textIsSelectable="false"
-        android:textStyle="bold"
-        tools:ignore="TextViewEdits"
-        tools:layout_editor_absoluteX="207dp"
-        tools:layout_editor_absoluteY="463dp" />
-
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
