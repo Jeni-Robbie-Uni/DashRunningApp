@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp">
+
+        <RelativeLayout
+
+            android:id="@+id/nav_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/actionbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:minHeight="?attr/actionBarSize"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:theme="?attr/actionBarTheme" />
+
+                <ImageButton
+                    android:id="@+id/back_nav"
+                    android:layout_width="38dp"
+                    android:layout_height="34dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#00FFFFFF"
+                    android:cropToPadding="true"
+                    app:srcCompat="@drawable/back_nav" />
+                <ImageButton
+                    android:id="@+id/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                        android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/white_logo" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/signup_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@id/nav_toolbar"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="50dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Sign Up"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/diaglogue_box_border"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="450dp"
+                    android:layout_below="@id/title"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/fieldEntry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/sub1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat"
+                                    android:text="Firstname"
+                                    android:textColor="@color/diaglogue_box_border" />
+
+                                <ImageView
+                                    android:id="@+id/box1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+
+                                    android:layout_marginTop="2dp"
+
+                                    android:layout_marginBottom="20dp"
+                                    app:srcCompat="@drawable/dialogue_box" />
+
+                                <TextView
+                                    android:id="@+id/sub2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat"
+                                    android:text="Surname"
+                                    android:textColor="@color/diaglogue_box_border" />
+
+                                <ImageView
+                                    android:id="@+id/box2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:srcCompat="@drawable/dialogue_box" />
+
+                                <TextView
+                                    android:id="@+id/sub3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat"
+                                    android:text="Email"
+                                    android:textColor="@color/diaglogue_box_border" />
+
+                                <ImageView
+                                    android:id="@+id/box3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:srcCompat="@drawable/dialogue_box" />
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                       android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/textView6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat"
+                                    android:text="Password"
+                                    android:textColor="@color/diaglogue_box_border" />
+
+
+
+                        </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/box4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:srcCompat="@drawable/dialogue_box" />
+
+
+
+
+                        <TextView
+                            android:id="@+id/Terms"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="By clicking continue, you are thereby agreeing to terms sand condistions Specified"
+                            android:textAlignment="textStart"
+                            app:autoSizeTextType="uniform" />
+
+                        <TextView
+                            android:id="@+id/termsLink"
+                            style="@style/FirebaseUI.Text.Link"
+                            android:layout_width="275dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:autoLink="web"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/montserrat"
+                            android:foregroundGravity="bottom"
+                            android:gravity="bottom|clip_horizontal"
+                            android:linksClickable="true"
+                            android:text="Terms and conditions"
+                            android:textAlignment="center"
+                            android:textColorLink="#03A9F4" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Agree" />
+                        </LinearLayout>
+
+
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:autoText="true"
+                    android:background="@drawable/button_shape"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Submit"
+                    android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

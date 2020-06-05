@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/bottom_banner"
-        android:layout_width="418dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:minHeight="40dp"
         app:srcCompat="@drawable/blue_rectangles"
@@ -19,7 +19,7 @@
 
     <ImageView
         android:id="@+id/top_banner"
-        android:layout_width="417dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="-4dp"
@@ -30,14 +30,15 @@
 
     <ImageView
         android:id="@+id/dash_logo"
-        android:layout_width="287dp"
-        android:layout_height="115dp"
+        android:layout_width="wrap_content"
+        android:layout_height="159dp"
         android:layout_below="@+id/bottom_banner"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="60dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="88dp"
+        android:scaleType="centerCrop"
         android:foregroundGravity="center_horizontal"
         app:srcCompat="@drawable/dash_icon1"
         tools:layout_editor_absoluteX="63dp"
@@ -45,7 +46,7 @@
 
     <TextView
         android:id="@+id/company_slogan"
-        android:layout_width="196dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_below="@+id/dash_logo"
@@ -64,14 +65,14 @@
     <Button
         android:id="@+id/facebook_login_btn"
         style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
-        android:layout_width="233dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/login_instruct"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="-20dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="42dp"
         android:fontFamily="sans-serif-medium"
         android:text="Continue With Facebook"
         android:textSize="21sp"
@@ -81,7 +82,7 @@
 
     <ImageView
         android:id="@+id/login_bg"
-        android:layout_width="332dp"
+        android:layout_width="wrap_content"
         android:layout_height="193dp"
         android:layout_below="@+id/dash_logo"
         android:layout_alignParentStart="true"
@@ -144,7 +145,7 @@
     <EditText
 
         android:id="@+id/editEmail"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignStart="@+id/textentry_bg2"
         android:layout_alignTop="@+id/textentry_bg2"
@@ -168,7 +169,7 @@
 
     <EditText
         android:id="@+id/editPassword"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignStart="@+id/textentry_bg"
         android:layout_alignEnd="@+id/textentry_bg"
@@ -190,7 +191,7 @@
     <TextView
         android:id="@+id/login_instruct"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/SignUpLink"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -229,6 +230,7 @@
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="463dp" />
 
+
     <TextView
         android:id="@+id/SignUpLink"
         android:layout_width="wrap_content"
@@ -247,5 +249,6 @@
         tools:ignore="TextViewEdits"
         tools:layout_editor_absoluteX="207dp"
         tools:layout_editor_absoluteY="463dp" />
+
 
 </RelativeLayout>
