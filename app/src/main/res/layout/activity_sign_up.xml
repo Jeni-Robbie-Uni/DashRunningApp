@@ -46,13 +46,12 @@
         <RelativeLayout
             android:id="@+id/signup_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignWithParentIfMissing="false"
+            android:layout_height="wrap_content"
             android:layout_below="@id/nav_toolbar"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="50dp">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+>
 
                 <TextView
                     android:id="@+id/title"
@@ -65,23 +64,21 @@
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="450dp"
-                    android:layout_below="@id/title"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
+
+
+
+
+
+
 
                         <LinearLayout
                             android:id="@+id/fieldEntry"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:orientation="vertical">
+                            android:layout_marginTop="20dp"
+                            android:layout_below="@id/title"
+                            android:orientation="vertical"
+                            android:weightSum="1">
 
                                 <TextView
                                     android:id="@+id/sub1"
@@ -89,31 +86,23 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/montserrat"
                                     android:text="Firstname"
-                                    android:textColor="@color/diaglogue_box_border" />
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/box1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
+                                    android:textColor="@color/diaglogue_box_border"
+                                    android:textSize="18sp" />
 
-                                    android:layout_marginTop="2dp"
 
-                                    android:layout_marginBottom="20dp"
-                                    app:srcCompat="@drawable/dialogue_box" />
+                            <EditText
+                                android:id="@+id/editFirstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
 
-                                        <EditText
-                                            android:id="@+id/editFirstName"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:ems="10"
-                                            android:inputType="textPersonName"
-                                            android:gravity="left"
-                                            android:hint="Enter name" />
-                                </RelativeLayout>
+
+                                android:ems="10"
+                                android:gravity="left"
+                                android:hint="Enter name"
+                                android:inputType="textPersonName"
+                                android:textColorHighlight="@color/colorPrimaryDark"
+                                android:textColorLink="@color/colorPrimaryDark" />
+
 
                                 <TextView
                                     android:id="@+id/sub2"
@@ -121,32 +110,23 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/montserrat"
                                     android:text="Surname"
-                                    android:textColor="@color/diaglogue_box_border" />
+                                    android:textColor="@color/diaglogue_box_border"
+                                    android:textSize="18sp" />
 
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/box2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="2dp"
-                                    android:layout_marginBottom="20dp"
-                                    app:srcCompat="@drawable/dialogue_box" />
+                            <EditText
+                                android:id="@+id/editSurname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
 
-                                        <EditText
-                                            android:id="@+id/editSurname"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:ems="10"
-                                            android:inputType="textPersonName"
-                                            android:gravity="left"
-                                            android:hint="Enter surnamename" />
 
-                                </RelativeLayout>
+                                android:ems="10"
+                                android:gravity="left"
+                                android:hint="Enter surnamename"
+                                android:inputType="textPersonName"
+                                android:textColorHighlight="@color/colorPrimaryDark"
+                                android:textColorLink="@color/colorPrimaryDark" />
+
 
                                 <TextView
                                     android:id="@+id/sub3"
@@ -154,51 +134,43 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/montserrat"
                                     android:text="Email"
-                                    android:textColor="@color/diaglogue_box_border" />
+                                    android:textColor="@color/diaglogue_box_border"
+                                    android:textSize="18sp" />
 
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                            <EditText
+                                android:id="@+id/editEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:gravity="left"
+                                android:hint="Enter Email"
+                                android:inputType="textEmailAddress"
+                                android:textColorHighlight="@color/colorPrimaryDark"
+                                android:textColorLink="@color/colorPrimaryDark" />
 
-                                <ImageView
-                                    android:id="@+id/box3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="2dp"
-                                    android:layout_marginBottom="20dp"
-                                    app:srcCompat="@drawable/dialogue_box" />
-                                        <EditText
-                                            android:id="@+id/editEmail"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:ems="10"
-                                            android:inputType="textEmailAddress"
-                                            android:gravity="left"
-                                            android:hint="Enter Email" />
 
-                                </RelativeLayout>
 
                                 <RelativeLayout
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
-                                       android:orientation="horizontal">
-                                <TextView
-                                    android:id="@+id/textView6"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/montserrat"
-                                    android:text="Password"
-                                    android:textColor="@color/diaglogue_box_border" />
+                                       android:orientation="horizontal"
+                                   android:layout_marginBottom="2dp">
+
+                                        <TextView
+                                            android:id="@+id/textView6"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat"
+                                            android:text="Password"
+                                            android:textColor="@color/diaglogue_box_border"
+                                            android:textSize="18sp" />
 
                                        <Button
                                            android:id="@+id/imageButton"
                                            android:layout_width="20dp"
                                            android:layout_height="20dp"
                                            android:layout_alignParentEnd="true"
-
                                            android:background="@drawable/help_icon" />
 
 
@@ -207,32 +179,26 @@
 
                                </RelativeLayout>
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/box4"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="2dp"
-                                    android:layout_marginBottom="20dp"
+                            <EditText
+                                android:id="@+id/editPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:gravity="start"
+                                android:hint="Enter Password"
+                                android:inputType="textPassword"
+                                android:textColorHighlight="@color/colorPrimaryDark"
+                                android:textColorLink="@color/colorPrimaryDark"
+                                android:textSize="16sp" />
 
-                                    app:srcCompat="@drawable/dialogue_box" />
+                        </LinearLayout>
 
-                                        <EditText
-                                            android:id="@+id/editPassword"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="10dp"
-                                            android:layout_marginEnd="10dp"
-                                            android:ems="10"
-                                            android:inputType="textPassword"
-                                            android:gravity="start"
-                                            android:hint="Enter Password" />
-
-                                </RelativeLayout>
-
-
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:layout_marginTop="4dp"
+                           android:layout_below="@id/fieldEntry">
 
 
                         <TextView
@@ -244,21 +210,19 @@
                             android:textAlignment="textStart"
                             app:autoSizeTextType="uniform" />
 
-                        <TextView
-                            android:id="@+id/termsLink"
-                            style="@style/FirebaseUI.Text.Link"
-                            android:layout_width="275dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="bottom"
-                            android:autoLink="web"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:fontFamily="@font/montserrat"
-                            android:foregroundGravity="bottom"
-                            android:gravity="bottom|clip_horizontal"
-                            android:linksClickable="true"
-                            android:text="Terms and conditions"
-                            android:textColorLink="#03A9F4" />
+                               <TextView
+                                   android:id="@+id/termsLink"
+                                   style="@style/FirebaseUI.Text.Link"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_gravity="bottom"
+                                   android:autoLink="web"
+                                   android:clickable="true"
+                                   android:focusable="true"
+                                   android:fontFamily="@font/montserrat"
+                                   android:linksClickable="true"
+                                   android:text="Terms and conditions"
+                                   android:textColorLink="#03A9F4" />
 
                         <CheckBox
                             android:id="@+id/checkBox2"
@@ -267,28 +231,27 @@
                             android:layout_gravity="center"
                             android:fontFamily="@font/montserrat"
                             android:text="Agree" />
-                        </LinearLayout>
+
+                                <Button
+                                    android:id="@+id/button2"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/button_shape"
+                                    android:fontFamily="@font/montserrat"
+                                    android:text="Submit"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="right"/>
+                                    </LinearLayout>
+
 
 
 
                 </RelativeLayout>
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:autoText="true"
-                    android:background="@drawable/button_shape"
-                    android:fontFamily="@font/montserrat"
-                    android:text="Submit"
-                    android:textColor="@color/white" />
+
 
         </RelativeLayout>
 
 
 
-
-
-</RelativeLayout>

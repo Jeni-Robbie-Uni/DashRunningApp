@@ -19,7 +19,7 @@ public class SplashScreen extends AppCompatActivity {
 
         //mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(this, login.class);
+        Intent intent = new Intent(this, SignUp.class);
         startActivity(intent);
 
     }
