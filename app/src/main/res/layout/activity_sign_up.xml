@@ -32,7 +32,7 @@
                     android:background="#00FFFFFF"
                     android:cropToPadding="true"
                     app:srcCompat="@drawable/back_nav" />
-                <ImageButton
+                <ImageView
                     android:id="@+id/icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +90,9 @@
                                     android:fontFamily="@font/montserrat"
                                     android:text="Firstname"
                                     android:textColor="@color/diaglogue_box_border" />
-
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/box1"
                                     android:layout_width="match_parent"
@@ -101,6 +103,18 @@
                                     android:layout_marginBottom="20dp"
                                     app:srcCompat="@drawable/dialogue_box" />
 
+                                        <EditText
+                                            android:id="@+id/editFirstName"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_marginEnd="10dp"
+                                            android:ems="10"
+                                            android:inputType="textPersonName"
+                                            android:gravity="left"
+                                            android:hint="Enter name" />
+                                </RelativeLayout>
+
                                 <TextView
                                     android:id="@+id/sub2"
                                     android:layout_width="match_parent"
@@ -109,6 +123,10 @@
                                     android:text="Surname"
                                     android:textColor="@color/diaglogue_box_border" />
 
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/box2"
                                     android:layout_width="match_parent"
@@ -116,6 +134,19 @@
                                     android:layout_marginTop="2dp"
                                     android:layout_marginBottom="20dp"
                                     app:srcCompat="@drawable/dialogue_box" />
+
+                                        <EditText
+                                            android:id="@+id/editSurname"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_marginEnd="10dp"
+                                            android:ems="10"
+                                            android:inputType="textPersonName"
+                                            android:gravity="left"
+                                            android:hint="Enter surnamename" />
+
+                                </RelativeLayout>
 
                                 <TextView
                                     android:id="@+id/sub3"
@@ -125,6 +156,11 @@
                                     android:text="Email"
                                     android:textColor="@color/diaglogue_box_border" />
 
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
                                 <ImageView
                                     android:id="@+id/box3"
                                     android:layout_width="match_parent"
@@ -132,28 +168,69 @@
                                     android:layout_marginTop="2dp"
                                     android:layout_marginBottom="20dp"
                                     app:srcCompat="@drawable/dialogue_box" />
-                               <LinearLayout
+                                        <EditText
+                                            android:id="@+id/editEmail"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_marginEnd="10dp"
+                                            android:ems="10"
+                                            android:inputType="textEmailAddress"
+                                            android:gravity="left"
+                                            android:hint="Enter Email" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
                                        android:orientation="horizontal">
                                 <TextView
                                     android:id="@+id/textView6"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/montserrat"
                                     android:text="Password"
                                     android:textColor="@color/diaglogue_box_border" />
 
+                                       <Button
+                                           android:id="@+id/imageButton"
+                                           android:layout_width="20dp"
+                                           android:layout_height="20dp"
+                                           android:layout_alignParentEnd="true"
+
+                                           android:background="@drawable/help_icon" />
 
 
-                        </LinearLayout>
+
+
+
+                               </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/box4"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:layout_marginTop="2dp"
                                     android:layout_marginBottom="20dp"
+
                                     app:srcCompat="@drawable/dialogue_box" />
+
+                                        <EditText
+                                            android:id="@+id/editPassword"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_marginEnd="10dp"
+                                            android:ems="10"
+                                            android:inputType="textPassword"
+                                            android:gravity="start"
+                                            android:hint="Enter Password" />
+
+                                </RelativeLayout>
 
 
 
@@ -181,7 +258,6 @@
                             android:gravity="bottom|clip_horizontal"
                             android:linksClickable="true"
                             android:text="Terms and conditions"
-                            android:textAlignment="center"
                             android:textColorLink="#03A9F4" />
 
                         <CheckBox
