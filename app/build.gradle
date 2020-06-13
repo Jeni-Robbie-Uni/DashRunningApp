@@ -1,20 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
-    }
-
-
-    repositories {
-        mavenCentral()
-        mavenLocal()
-    }
-
 
     android {
         compileSdkVersion 29
@@ -27,7 +13,6 @@ buildscript {
             versionCode 1
             versionName "1.0"
             resConfigs "en" // And any other languages you supports
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
 
         buildTypes {
@@ -42,6 +27,9 @@ buildscript {
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+
+        implementation 'com.android.volley:volley:1.1.1'
+
         implementation 'androidx.appcompat:appcompat:1.1.0'
         implementation 'com.google.android.material:material:1.1.0'
         implementation 'androidx.annotation:annotation:1.1.0'
@@ -52,19 +40,12 @@ buildscript {
         implementation 'com.google.firebase:firebase-auth:19.3.1'
         implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
 
-        // Required only if Facebook login support is required
-        // Find the latest Facebook SDK releases here: https://github.com/facebook/facebook-android-sdk/blob/master/CHANGELOG.md
-        implementation 'com.facebook.android:facebook-login:7.0.0'
 
 
         implementation 'androidx.navigation:navigation-fragment:2.2.2'
         implementation 'androidx.navigation:navigation-ui:2.2.2'
-        testImplementation 'junit:junit:4.12'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-        implementation 'com.android.volley:volley:1.1.1'
+
 
 
     }
-}
