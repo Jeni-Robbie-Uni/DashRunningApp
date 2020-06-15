@@ -6,7 +6,7 @@ class UserDetails {
     String password;
     String surname;
 
-    public UserDetails(String userEmail, String userFirsname, String userSurnmae, String userPassword) {
+    public UserDetails(String userFirsname, String userSurnmae, String userEmail, String userPassword) {
         firstname=userFirsname;
         surname=userSurnmae;
         email=userEmail;
