@@ -1,18 +1,24 @@
 package com.example.dashrunningapp;
 
 class UserDetails {
-    String fName;
+    String firstname;
     String email;
     String password;
-    String sName;
+    String surname;
 
+    public UserDetails(String userEmail, String userFirsname, String userSurnmae, String userPassword) {
+        firstname=userFirsname;
+        surname=userSurnmae;
+        email=userEmail;
+        password=userPassword;
+    }
 
-        public String getFName() {
-            return this.fName;
-        }
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-        public void setFirstName(String firstname) {
-            this.fName = firstname;
+    public String getFName() {
+            return this.firstname;
         }
 
     public String getPassword() {
@@ -20,7 +26,7 @@ class UserDetails {
     }
 
     public void setPassword(String pWord) {
-        this.sName = pWord;
+        this.password = pWord;
     }
 
     public String getEmail() {
@@ -28,15 +34,15 @@ class UserDetails {
     }
 
     public void setEmail(String email) {
-        this.sName = email;
+        this.email = email;
     }
 
     public String getSurname() {
-        return this.sName;
+        return this.surname;
     }
 
     public void setSurname(String surname) {
-        this.sName = surname;
+        this.surname = surname;
     }
 
 }
