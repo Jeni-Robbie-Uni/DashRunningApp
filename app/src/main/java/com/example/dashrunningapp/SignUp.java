@@ -83,7 +83,7 @@ public class SignUp extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                //final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
+                final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
 
                 //define context for post method
                  Context m_context = getApplicationContext();
@@ -93,7 +93,7 @@ public class SignUp extends AppCompatActivity {
                         getRequestQueue();
                 String url ="http://localhost:5000" + "/api/Users";
 
-                /*
+
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -103,6 +103,14 @@ public class SignUp extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("VOLLEY", error.toString());
+                        if (error.networkResponse.statusCode == 409) {
+                            //do stuff
+                            email.setError("Email address already registered");
+                        }
+                        else {
+                            Toast.makeText(SignUp.this, error.toString(), Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 }) {
                     @Override
@@ -128,10 +136,12 @@ public class SignUp extends AppCompatActivity {
                         }
                         return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
                     }
-                }; */
+                };
+
+                queue.add(stringRequest);
 
 
-                //Request a string response from the provided URL.
+                /*Request a string response from the provided URL.
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                         (Request.Method.POST, url, userJsonObject, new Response.Listener() {
@@ -154,7 +164,7 @@ public class SignUp extends AppCompatActivity {
 
 
                 // Add the request to the RequestQueue.
-                queue.add(jsonObjectRequest);
+                queue.add(jsonObjectRequest);*/
 
 
 
