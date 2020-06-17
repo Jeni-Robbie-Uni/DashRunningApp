@@ -23,10 +23,15 @@ import androidx.fragment.app.Fragment;
 
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -39,9 +44,14 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+
+
+
 public class SignUp extends AppCompatActivity {
 
     private PopupWindow mPopupWindow;
+
+
 
 
 
@@ -53,19 +63,22 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);      //display signup layout
 
-        //Declare button variables for buttons in layout
-        final Button submitButton = (Button) findViewById(R.id.signup_submit_btn);
-        final Button backButton = (Button) findViewById(R.id.back_nav);
-        final Button passwordSpecBtn = (Button) findViewById(R.id.btn_passwordSpec);
+        //Get references to all visible buttons in layout
+        final Button submitButton =  findViewById(R.id.signup_submit_btn);
+        final Button backButton = findViewById(R.id.back_nav);
+        final Button passwordSpecBtn = findViewById(R.id.btn_passwordSpec);
 
-        //Retrieve user input from specific text views
-        final EditText f_name = (EditText)findViewById(R.id.editFirstName);
-        final EditText s_name = (EditText)findViewById(R.id.editSurname);
-        final EditText email = (EditText)findViewById(R.id.editEmail);
-        final EditText password = (EditText)findViewById(R.id.editPassword);
+        // Get a reference for the tesxt views that hold sign up info
+        final EditText f_name = findViewById(R.id.editFirstName);
+        final EditText s_name = findViewById(R.id.editSurname);
+        final EditText email = findViewById(R.id.editEmail);
+        final EditText password = findViewById(R.id.editPassword);
 
         //define context for post method
         final Context m_context = getApplicationContext();
+
+
+
 
 
         //***************************Navigation *******************************
@@ -92,25 +105,11 @@ public class SignUp extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(SignUp.this, "test", Toast.LENGTH_LONG).show();
-                    LayoutInflater inflater = (LayoutInflater) m_context.getSystemService(LAYOUT_INFLATER_SERVICE);
 
+                    LayoutInflater inflater = (LayoutInflater) m_context.getSystemService(LAYOUT_INFLATER_SERVICE);
                     // Inflate the custom layout/view
                     View customView = inflater.inflate(R.layout.pop_layout,null);
 
-                /*
-                    public PopupWindow (View contentView, int width, int height)
-                        Create a new non focusable popup window which can display the contentView.
-                        The dimension of the window must be passed to this constructor.
-
-                        The popup does not provide any background. This should be handled by
-                        the content view.
-
-                    Parameters
-                        contentView : the popup's content
-                        width : the popup's width
-                        height : the popup's height
-                */
                     // Initialize a new instance of popup window
                     mPopupWindow = new PopupWindow(
                             customView,
@@ -136,22 +135,6 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
 
-                /*
-                    public void showAtLocation (View parent, int gravity, int x, int y)
-                        Display the content view in a popup window at the specified location. If the
-                        popup window cannot fit on screen, it will be clipped.
-                        Learn WindowManager.LayoutParams for more information on how gravity and the x
-                        and y parameters are related. Specifying a gravity of NO_GRAVITY is similar
-                        to specifying Gravity.LEFT | Gravity.TOP.
-
-                    Parameters
-                        parent : a parent view to get the getWindowToken() token from
-                        gravity : the gravity which controls the placement of the popup window
-                        x : the popup's x location offset
-                        y : the popup's y location offset
-                */
-
-
                     // Finally, show the popup window at the center location of root relative layout
                     View rLayout= findViewById(R.id.password_label_view);
                     mPopupWindow.showAtLocation( rLayout,Gravity.CENTER,0,0);
@@ -170,87 +153,114 @@ public class SignUp extends AppCompatActivity {
 
 
 
-
-
-
             //When Clicked, submit button will validate and then post input
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                //Validate User Details
 
 
-                //Email validation
 
 
-                //Create instance of user details
-                UserDetails current_user= new UserDetails(f_name.getText().toString(),s_name.getText().toString(),email.getText().toString(),password.getText().toString());
+                    //Create instance of user deta
+                    UserDetails current_user = new UserDetails(f_name.getText().toString(), s_name.getText().toString(), email.getText().toString(), password.getText().toString());
 
-                //Create a JSON object for post request
-                JSONObject userJsonObject = null;
-                try {
-                    userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(current_user));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
+                    //Create a JSON object for post request
+                    JSONObject userJsonObject = null;
+                    try {
+                        userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(current_user));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
+                    final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
 
                 // Instantiate the RequestQueue.
-                RequestQueue queue = VolleyQueue.getInstance(m_context).
+                final RequestQueue queue = VolleyQueue.getInstance(m_context).
                         getRequestQueue();
-                String url ="http://localhost:5000" + "/api/Users";
 
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("VOLLEY", response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("VOLLEY", error.toString());
-                        if (error.networkResponse.statusCode == 409) {
-                            //do stuff
-                            email.setError("Email address already registered");
+                String url = "http://localhost:5000" + "/api/Users";
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("VOLLEY", response);
                         }
-                        else {
-                            Toast.makeText(SignUp.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                    Toast.makeText(m_context,
+                                           "no connection",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof AuthFailureError) {
+                                    Toast.makeText(m_context,
+                                            "no author",
+                                            Toast.LENGTH_LONG).show();
+                                    //TODO
+                                } else if (error instanceof ServerError) {
+                                    //TODO
+                                    if (error.networkResponse.statusCode==409){
+                                        email.setError("waaaaaaaaaaah");
+                                    }
+                                    else {
+                                        Toast.makeText(m_context,
+                                                "servererror",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                } else if (error instanceof NetworkError) {
+                                    //TODO
+                                    Toast.makeText(m_context,
+                                            "networkerror",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof ParseError) {
+                                    //TODO
+                                }
+                            }
+
+
+
+                    }) {
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
                         }
 
-                    }
-                }) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
-                    }
-                    //cant convert bytes= volley cant send to server i.e cause its custom request or corript
-                    @Override
-                    public byte[] getBody() {
-                        try {
-                            return jsonData == null ? null : jsonData.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
-                            return null;
+                        //cant convert bytes= volley cant send to server i.e cause its custom request or corript
+                        @Override
+                        public byte[] getBody() {
+                            try {
+                                return jsonData == null ? null : jsonData.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
+                                return null;
+                            }
                         }
-                    }
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null) {
-                            responseString = String.valueOf(response.statusCode);
-                            // can get more details such as response.headers
+                        @Override
+                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                            String responseString = "";
+                            if (response != null) {
+                                responseString = String.valueOf(response.statusCode);
+                                // can get more details such as response.headers
+                                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                            }
+                            return Response.error(new VolleyError());
+
                         }
-                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
+                    };
 
-                queue.add(stringRequest);
 
+
+                   try {
+                       queue.add(stringRequest);
+                   }
+                   catch (Exception ex) {
+                       Log.e("Error", ex.toString());
+                   }
+
+                }
 
                 /*Request a string response from the provided URL.
 
@@ -283,7 +293,7 @@ public class SignUp extends AppCompatActivity {
 
 
 
-            }
+
 
         });
 
