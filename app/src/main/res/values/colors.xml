@@ -3,7 +3,7 @@
     <color name="colorPrimary">#0994db</color>
     <color name="colorPrimaryDark">#036ca6</color>
     <color name="colorPrimaryLight">#4D09DFFB</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#036ca6</color>
     <color name="white">#FFFF</color>
     <color name="diaglogue_box_border">#292121</color>
 </resources>

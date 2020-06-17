@@ -26,12 +26,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-
-
-
-
-
+    <string name="passwordCriteria">Passwords must be between 5 and 14 characters. Password must include one or more number or special character.</string>
+    <string name="PasswordTitle">Password Criteria</string>
+    <string name="ok">ok</string>
 
 
 </resources>

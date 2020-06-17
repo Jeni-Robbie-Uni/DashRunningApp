@@ -148,34 +148,42 @@
                                 android:textColorLink="@color/colorPrimaryDark" />
 
 
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/myCoordinatorLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
                                 <RelativeLayout
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                       android:orientation="horizontal"
-                                   android:layout_marginBottom="2dp">
-
-                                        <TextView
-                                            android:id="@+id/textView6"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat"
-                                            android:text="Password"
-                                            android:textColor="@color/diaglogue_box_border"
-                                            android:textSize="18sp" />
-
-                                       <Button
-                                           android:id="@+id/imageButton"
-                                           android:layout_width="20dp"
-                                           android:layout_height="20dp"
-                                           android:layout_alignParentEnd="true"
-                                           android:background="@drawable/help_icon" />
+                                    android:id="@+id/password_label_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    tools:ignore="MissingConstraints">
 
 
+                                    <TextView
+                                        android:id="@+id/textView6"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/montserrat"
+                                        android:text="Password"
+                                        android:textColor="@color/diaglogue_box_border"
+                                        android:textSize="18sp" />
+
+                                    <Button
+                                        android:id="@+id/btn_passwordSpec"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:background="@drawable/help_btton" />
+
+                                </RelativeLayout>
 
 
 
-                               </RelativeLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                             <EditText
                                 android:id="@+id/editPassword"
