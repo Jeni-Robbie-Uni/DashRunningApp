@@ -153,6 +153,8 @@ public class SignUp extends AppCompatActivity {
 
 
 
+
+
             //When Clicked, submit button will validate and then post input
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,8 +163,37 @@ public class SignUp extends AppCompatActivity {
 
 
 
+                boolean allValid= true;
 
 
+
+                    if (!UserDetailValidation.IsEmailValid(email)) {
+                        email.setError("Invalid email. Needs to be an email fam e.g. example@gmail.com");
+                        email.setText("");
+                        allValid=false;
+                    }
+
+                    if (UserDetailValidation.IsFieldEmpty(f_name.getText().toString())){
+                    f_name.setError("@String/EmptyField");
+                    f_name.setText("");
+                    allValid=false;
+                }
+                if (UserDetailValidation.IsFieldEmpty(s_name.getText().toString())){
+                    s_name.setError("@String/EmptyField");
+                    s_name.setText("");
+                    allValid=false;
+                }
+
+                if (!UserDetailValidation.IsPasswordValid(password, 13,5)){
+                    password.setError("@String/invalid_password");
+                    password.setText("");
+                    allValid=false;
+                }
+
+
+
+
+                if (allValid) {
                     //Create instance of user deta
                     UserDetails current_user = new UserDetails(f_name.getText().toString(), s_name.getText().toString(), email.getText().toString(), password.getText().toString());
 
@@ -177,11 +208,11 @@ public class SignUp extends AppCompatActivity {
 
                     final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
 
-                // Instantiate the RequestQueue.
-                final RequestQueue queue = VolleyQueue.getInstance(m_context).
-                        getRequestQueue();
+                    // Instantiate the RequestQueue.
+                    final RequestQueue queue = VolleyQueue.getInstance(m_context).
+                            getRequestQueue();
 
-                String url = "http://localhost:5000" + "/api/Users";
+                    String url = "http://localhost:5000" + "/api/Users";
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -191,35 +222,33 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
-                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                Toast.makeText(m_context,
+                                        "no connection",
+                                        Toast.LENGTH_LONG).show();
+                            } else if (error instanceof AuthFailureError) {
+                                Toast.makeText(m_context,
+                                        "no author",
+                                        Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof ServerError) {
+                                //TODO
+                                if (error.networkResponse.statusCode == 409) {
+                                    email.setError("waaaaaaaaaaah");
+                                } else {
                                     Toast.makeText(m_context,
-                                           "no connection",
+                                            "servererror",
                                             Toast.LENGTH_LONG).show();
-                                } else if (error instanceof AuthFailureError) {
-                                    Toast.makeText(m_context,
-                                            "no author",
-                                            Toast.LENGTH_LONG).show();
-                                    //TODO
-                                } else if (error instanceof ServerError) {
-                                    //TODO
-                                    if (error.networkResponse.statusCode==409){
-                                        email.setError("waaaaaaaaaaah");
-                                    }
-                                    else {
-                                        Toast.makeText(m_context,
-                                                "servererror",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                } else if (error instanceof NetworkError) {
-                                    //TODO
-                                    Toast.makeText(m_context,
-                                            "networkerror",
-                                            Toast.LENGTH_LONG).show();
-                                } else if (error instanceof ParseError) {
-                                    //TODO
                                 }
+                            } else if (error instanceof NetworkError) {
+                                //TODO
+                                Toast.makeText(m_context,
+                                        "networkerror",
+                                        Toast.LENGTH_LONG).show();
+                            } else if (error instanceof ParseError) {
+                                //TODO
                             }
-
+                        }
 
 
                     }) {
@@ -238,6 +267,7 @@ public class SignUp extends AppCompatActivity {
                                 return null;
                             }
                         }
+
                         @Override
                         protected Response<String> parseNetworkResponse(NetworkResponse response) {
                             String responseString = "";
@@ -252,13 +282,11 @@ public class SignUp extends AppCompatActivity {
                     };
 
 
-
-                   try {
-                       queue.add(stringRequest);
-                   }
-                   catch (Exception ex) {
-                       Log.e("Error", ex.toString());
-                   }
+                    try {
+                        queue.add(stringRequest);
+                    } catch (Exception ex) {
+                        Log.e("Error", ex.toString());
+                    }
 
                 }
 
@@ -288,11 +316,7 @@ public class SignUp extends AppCompatActivity {
                 queue.add(jsonObjectRequest);*/
 
 
-
-
-
-
-
+            }
 
 
         });
