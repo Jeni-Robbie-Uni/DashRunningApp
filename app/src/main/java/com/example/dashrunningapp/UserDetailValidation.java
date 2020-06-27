@@ -28,7 +28,7 @@ public class UserDetailValidation {
     }
 
     public static Boolean IsPasswordValid(EditText passField, final int maxLength, final int minLength) {
-
+//Change to regex?
         String password = passField.getText().toString();
         int upCount = 0;
         int loCount = 0;

@@ -15,7 +15,6 @@ public class VolleyQueue {
         ctx = context;
         requestQueue = getRequestQueue();
 
-
     }
 
     public static synchronized VolleyQueue getInstance(Context context) {

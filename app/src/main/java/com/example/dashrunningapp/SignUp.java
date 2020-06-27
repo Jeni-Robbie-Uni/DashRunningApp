@@ -287,33 +287,10 @@ public class SignUp extends AppCompatActivity {
                     } catch (Exception ex) {
                         Log.e("Error", ex.toString());
                     }
-
+                    DbHelper databaseHelper= new DbHelper(SignUp.this);
+                    databaseHelper.AddUser(current_user.getEmail(), current_user.getPassword());
                 }
 
-                /*Request a string response from the provided URL.
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                        (Request.Method.POST, url, userJsonObject, new Response.Listener() {
-
-                            @Override
-                            public void onResponse(Object response) {
-                                Toast.makeText(SignUp.this,"Hey " +
-                                        response.toString(), Toast.LENGTH_LONG).show();
-
-
-
-                            }
-                        }, new Response.ErrorListener() {       //If post unsuccessful it does this
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // TODO: Handle error
-                                Toast.makeText(SignUp.this, error.toString(), Toast.LENGTH_LONG).show();    //Add error message to screen via toast
-                            }
-                        });
-
-
-                // Add the request to the RequestQueue.
-                queue.add(jsonObjectRequest);*/
 
 
             }
