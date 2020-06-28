@@ -10,12 +10,15 @@ class UserDetails {
 
 
 
-
+//this should
     public UserDetails(String userFirsname, String userSurnmae, String userEmail, String userPassword) {
         firstname=userFirsname;
         surname=userSurnmae;
         email=userEmail;
         password=userPassword;
+    }
+
+    public UserDetails() {
     }
 
     public void setFirstname(String firstname) {

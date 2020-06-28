@@ -37,6 +37,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.dashrunningapp.exceptions.NoStoredUserException;
+import com.example.dashrunningapp.exceptions.TooManyUsersException;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -195,7 +197,7 @@ public class SignUp extends AppCompatActivity {
 
                 if (allValid) {
                     //Create instance of user deta
-                    UserDetails current_user = new UserDetails(f_name.getText().toString(), s_name.getText().toString(), email.getText().toString(), password.getText().toString());
+                    final UserDetails current_user = new UserDetails(f_name.getText().toString(), s_name.getText().toString(), email.getText().toString(), password.getText().toString());
 
 
                     //Create a JSON object for post request
@@ -212,11 +214,141 @@ public class SignUp extends AppCompatActivity {
                     final RequestQueue queue = VolleyQueue.getInstance(m_context).
                             getRequestQueue();
 
-                    String url = "http://localhost:5000" + "/api/Users";
+                    final String url = "http://localhost:5000" + "/api/Users";
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.i("VOLLEY", response);
+
+
+
+
+
+
+
+                            DbHelper databaseHelper= new DbHelper(m_context);
+                            databaseHelper.AddUser(current_user.getEmail(), current_user.getPassword());
+
+
+
+
+
+
+                            try {
+                                UserDetails tempUserCheck = databaseHelper.checkUserExist();
+                                //Create a JSON object for post request
+                                JSONObject userJsonObject2= null;
+                                try {
+                                    userJsonObject2 = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(tempUserCheck));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                final String jsonData2 = userJsonObject2 == null ? null : userJsonObject2.toString();
+
+
+
+                                //Authorise with API
+                                String url2 = "http://localhost:5000" + "/api/Login";
+                                StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+
+                                        Log.i("VOLLEY", response);
+                                        AuthenticationDetails x = AuthenticationDetails.getInstance();
+                                        AuthenticationDetails.setToken(response);
+
+                                        Intent intent = new Intent(m_context, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                            Toast.makeText(m_context,
+                                                    "no connection",
+                                                    Toast.LENGTH_LONG).show();
+                                        } else if (error instanceof AuthFailureError) {
+                                            Toast.makeText(m_context,
+                                                    "no author",
+                                                    Toast.LENGTH_LONG).show();
+                                            //TODO
+                                        } else if (error instanceof ServerError) {
+                                            //TODO
+
+                                            Toast.makeText(m_context,
+                                                    "servererror",
+                                                    Toast.LENGTH_LONG).show();
+
+                                        } else if (error instanceof NetworkError) {
+                                            //TODO
+                                            Toast.makeText(m_context,
+                                                    "networkerror",
+                                                    Toast.LENGTH_LONG).show();
+                                        } else if (error instanceof ParseError) {
+                                            //TODO
+                                        }
+                                    }
+                                }){
+                                    @Override
+                                    public String getBodyContentType() {
+                                        return "application/json; charset=utf-8";
+                                    }
+
+                                    //cant convert bytes= volley cant send to server i.e cause its custom request or corript
+                                    @Override
+                                    public byte[] getBody() {
+                                        try {
+                                            return jsonData2 == null ? null : jsonData2.getBytes("utf-8");
+                                        } catch (UnsupportedEncodingException uee) {
+                                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
+                                            return null;
+                                        }
+                                    }
+                                    @Override
+                                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                        String responseString;
+                                        if (response != null) {
+                                            responseString = new String(response.data);
+                                            // can get more details such as response.headers
+                                            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                                        }
+                                        return Response.error(new VolleyError());
+                                    }
+                                };
+
+                                try {
+                                    queue.add(stringRequest2);
+                                } catch (Exception ex) {
+                                    Log.e("Error", ex.toString());
+                                }
+
+                            } catch (NoStoredUserException e) {
+                                e.printStackTrace();
+                            } catch (TooManyUsersException e) {
+                                e.printStackTrace();
+
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -234,7 +366,9 @@ public class SignUp extends AppCompatActivity {
                             } else if (error instanceof ServerError) {
                                 //TODO
                                 if (error.networkResponse.statusCode == 409) {
+                                    email.setText("");
                                     email.setError("waaaaaaaaaaah");
+
                                 } else {
                                     Toast.makeText(m_context,
                                             "servererror",
@@ -287,8 +421,8 @@ public class SignUp extends AppCompatActivity {
                     } catch (Exception ex) {
                         Log.e("Error", ex.toString());
                     }
-                    DbHelper databaseHelper= new DbHelper(SignUp.this);
-                    databaseHelper.AddUser(current_user.getEmail(), current_user.getPassword());
+
+
                 }
 
 
@@ -296,8 +430,10 @@ public class SignUp extends AppCompatActivity {
             }
 
 
-        });
 
+
+
+        });
 
     }
 

@@ -103,9 +103,10 @@ import java.io.OutputStream;
 
 
         public void AddUser(String email, String password){
-
+            db = openDatabase();
             db.execSQL("CREATE TABLE IF NOT EXISTS User(email VARCHAR,password VARCHAR);");
-            db.execSQL("INSERT INTO User VALUES(" + email + ", " + password + ");");
+            db.execSQL("INSERT INTO User VALUES(\'"+ email +"\', \'"+ password +"\');");
+            db.close();
 
         }
         public void DropUserTable(){
@@ -116,7 +117,7 @@ import java.io.OutputStream;
         public UserDetails checkUserExist() throws NoStoredUserException, TooManyUsersException {
 
 
-            UserDetails loginDetails = null;
+            UserDetails loginDetails = new UserDetails();
 
             String[] columns = {"email", "password"};
             db = openDatabase();
@@ -135,7 +136,7 @@ import java.io.OutputStream;
             loginDetails.password = cursor.getString(cursor.getColumnIndex("password"));
             loginDetails.email = cursor.getString(cursor.getColumnIndex("email"));
             cursor.close();
-            close();
+            db.close();
 
 
             return loginDetails;
