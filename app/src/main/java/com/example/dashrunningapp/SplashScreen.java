@@ -12,12 +12,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.dashrunningapp.exceptions.NoStoredUserException;
 import com.example.dashrunningapp.exceptions.TooManyUsersException;
 
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 //Splash Screen allows for app Loading wait screen
 //In splash screen application checks if user details are stored in SQL lite database and sends to api to get auth token
@@ -70,7 +73,23 @@ public class SplashScreen extends AppCompatActivity {
             //PUTAPIString constants in class
             String url =m_context.getString(R.string.server_Address) + m_context.getString(R.string.login_api);
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, GenerateTokenResponse(m_context), GenerateTokenError(m_context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, GenerateTokenResponse(m_context), GenerateTokenError(m_context))
+            {
+                @Override
+                public String getBodyContentType()
+                {
+                return "application/json; charset=utf-8";    //without this is expects plain text
+                }
+                //cant convert bytes= volley cant send to server i.e cause its custom request or corrupt
+                @Override
+                public byte[] getBody() {
+                    try {
+                        return jsonData == null ? null : jsonData.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
+                        return null;
+                    }
+                }
                 @Override
                 protected Response<String> parseNetworkResponse(NetworkResponse response) {     //Overridden to get post request response body
                     String responseString;

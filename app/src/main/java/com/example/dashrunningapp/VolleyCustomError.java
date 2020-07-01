@@ -1,6 +1,7 @@
 package com.example.dashrunningapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,21 +21,25 @@ public class VolleyCustomError {
             Toast.makeText(context,
                     "no connection",
                     Toast.LENGTH_LONG).show();
+            Log.e("Error",error.toString());
         } else if (error instanceof AuthFailureError) {
             Toast.makeText(context,
                     "no author",
                     Toast.LENGTH_LONG).show();
+            Log.e("Error",error.toString());
         } else if (error instanceof ServerError) {
             Toast.makeText(context,
                     "servererror",
                     Toast.LENGTH_LONG).show();
+            Log.e("ServerError",error.toString());
 
         } else if (error instanceof NetworkError) {
             Toast.makeText(context,
                     "networkerror",
                     Toast.LENGTH_LONG).show();
+            Log.e("ServerError",error.toString());
         } else if (error instanceof ParseError) {
-
+            Log.e("ServerError",error.toString());
         }
     }
 

@@ -320,21 +320,6 @@ public class SignUp extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         }
                     }, new Response.ErrorListener() {
                         @Override
