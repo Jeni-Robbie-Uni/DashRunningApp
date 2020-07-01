@@ -19,7 +19,10 @@ import com.example.dashrunningapp.exceptions.TooManyUsersException;
 
 import org.json.JSONObject;
 
-
+//Splash Screen allows for app Loading wait screen
+//In splash screen application checks if user details are stored in SQL lite database and sends to api to get auth token
+//If it comes across any error server/ authorization it opens login screen else will open main activity for custom experience
+//If db doesnt exits It creates one i.e. first launch
 public class SplashScreen extends AppCompatActivity {
 
     @Override
