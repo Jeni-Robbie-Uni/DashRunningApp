@@ -69,11 +69,9 @@ public class SplashScreen extends AppCompatActivity {
                     getRequestQueue();
 
             //Authorise with API
+            String url = StringConstants.getServerAddress() + StringConstants.getLogin();
 
-            //PUTAPIString constants in class
-            String url =m_context.getString(R.string.server_Address) + m_context.getString(R.string.login_api);
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, GenerateTokenResponse(m_context), GenerateTokenError(m_context))
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, VolleyCustomResponses.GenerateTokenResponse(m_context), VolleyCustomResponses.GenerateTokenError(m_context))
             {
                 @Override
                 public String getBodyContentType()
@@ -121,33 +119,6 @@ public class SplashScreen extends AppCompatActivity {
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
         }
-    }
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //Custom Volley response/ error Listeners////////////////////////////////////
-
-
-    private Response.Listener<String> GenerateTokenResponse(final Context m_context){
-       return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                AuthenticationDetails x = AuthenticationDetails.getInstance();
-                AuthenticationDetails.setToken(response);
-                Intent intent = new Intent(m_context, MainActivity.class);
-                startActivity(intent);
-            }
-        };
-    }
-    private Response.ErrorListener GenerateTokenError(final Context m_context) {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyCustomError.errorResponse(error, m_context);
-                Intent intent = new Intent(m_context, login.class);
-                startActivity(intent);
-            }
-        };
     }
 
 }
