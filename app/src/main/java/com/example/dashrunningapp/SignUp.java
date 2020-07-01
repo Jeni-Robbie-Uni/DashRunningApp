@@ -1,9 +1,6 @@
 package com.example.dashrunningapp;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,14 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
 
 
 import com.android.volley.AuthFailureError;
@@ -35,11 +28,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.dashrunningapp.exceptions.NoStoredUserException;
 import com.example.dashrunningapp.exceptions.TooManyUsersException;
-import com.google.android.material.snackbar.Snackbar;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,14 +45,8 @@ public class SignUp extends AppCompatActivity {
 
     private PopupWindow mPopupWindow;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);      //display signup layout

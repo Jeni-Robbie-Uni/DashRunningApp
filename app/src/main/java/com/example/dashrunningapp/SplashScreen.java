@@ -6,32 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.dashrunningapp.exceptions.NoStoredUserException;
 import com.example.dashrunningapp.exceptions.TooManyUsersException;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -40,89 +26,53 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        //Get app context
+        final Context m_context = getApplicationContext();
+
+
+        //Create instance of database helper
         DbHelper databaseHelper = new DbHelper(SplashScreen.this);
+
+
         try {
+            //If database exists, check if there are stored credentials and store
             UserDetails tempUserCheck = databaseHelper.checkUserExist();
-            //Create a JSON object for post request
+
+            //Create a JSON object for post request to format string for API
             JSONObject userJsonObject = null;
             try {
+                //Convert UserDetails to Json Object before converting to string for request
                 userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(tempUserCheck));
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (Exception ex) {    //If fails just have user login manually
+                Log.i("Exception:", ex.toString());
+                Intent intentLogin = new Intent(this, login.class);
+                startActivity(intentLogin);
             }
 
-            final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
+            //This should never be null as database helper throws that exception
+           if (userJsonObject==null){
+               Intent intentLogin = new Intent(this, login.class);
+               startActivity(intentLogin);
+           }
+            final String jsonData = userJsonObject.toString();
 
 
-
-
-
-
-            final Context m_context = getApplicationContext();
             // Instantiate the RequestQueue.
             final RequestQueue queue = VolleyQueue.getInstance(m_context).
                     getRequestQueue();
 
             //Authorise with API
-            String url = "http://localhost:5000" + "/api/login";
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
 
-                    Log.i("VOLLEY", response);
-                    AuthenticationDetails x = AuthenticationDetails.getInstance();
-                    AuthenticationDetails.setToken(response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+            //PUTAPIString constants in class
+            String url =m_context.getString(R.string.server_Address) + m_context.getString(R.string.login_api);
 
-                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                        Toast.makeText(m_context,
-                                "no connection",
-                                Toast.LENGTH_LONG).show();
-                    } else if (error instanceof AuthFailureError) {
-                        Toast.makeText(m_context,
-                                "no author",
-                                Toast.LENGTH_LONG).show();
-                        //TODO
-                    } else if (error instanceof ServerError) {
-                        //TODO
-
-                            Toast.makeText(m_context,
-                                    "servererror",
-                                    Toast.LENGTH_LONG).show();
-
-                    } else if (error instanceof NetworkError) {
-                        //TODO
-                        Toast.makeText(m_context,
-                                "networkerror",
-                                Toast.LENGTH_LONG).show();
-                    } else if (error instanceof ParseError) {
-                        //TODO
-                    }
-                }
-            }){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, GenerateTokenResponse(m_context), GenerateTokenError(m_context)){
                 @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
-
-                //cant convert bytes= volley cant send to server i.e cause its custom request or corript
-                @Override
-                public byte[] getBody() {
-                    try {
-                        return jsonData == null ? null : jsonData.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
-                        return null;
-                    }
-                }
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {     //Overridden to get post request response body
                     String responseString;
                     if (response != null) {
-                        responseString = String.valueOf(response.headers);
+                        responseString = new String(response.data);
                         // can get more details such as response.headers
                         return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
                     }
@@ -132,29 +82,51 @@ public class SplashScreen extends AppCompatActivity {
 
             try {
                 queue.add(stringRequest);
-            } catch (Exception ex) {
+            } catch (Exception ex) {            //If token can not be generated they must login
                 Log.e("Error", ex.toString());
+                Intent intent = new Intent(this, login.class);
+                startActivity(intent);
             }
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } catch (NoStoredUserException e) {
-            e.printStackTrace();
+        } catch (NoStoredUserException ex) { //If no users stored  make user login
+            Log.e("Catch", ex.toString());
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
-        } catch (TooManyUsersException e) {
-            e.printStackTrace();
+
+        } catch (TooManyUsersException ex) { //If more one user stored drop table and make user login
+            Log.e("Catch", ex.toString());
             databaseHelper.DropUserTable();
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
         }
-
-
-
-
-
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //Custom Volley response/ error Listeners////////////////////////////////////
+
+
+    private Response.Listener<String> GenerateTokenResponse(final Context m_context){
+       return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                AuthenticationDetails x = AuthenticationDetails.getInstance();
+                AuthenticationDetails.setToken(response);
+                Intent intent = new Intent(m_context, MainActivity.class);
+                startActivity(intent);
+            }
+        };
+    }
+    private Response.ErrorListener GenerateTokenError(final Context m_context) {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyCustomError.errorResponse(error, m_context);
+                Intent intent = new Intent(m_context, login.class);
+                startActivity(intent);
+            }
+        };
+    }
 
 }
 
