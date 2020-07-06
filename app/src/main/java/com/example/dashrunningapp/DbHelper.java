@@ -105,6 +105,7 @@ import java.io.OutputStream;
         public void AddUser(String email, String password){
             db = openDatabase();
             db.execSQL("CREATE TABLE IF NOT EXISTS User(email VARCHAR,password VARCHAR);");
+            db.execSQL("DELETE FROM User;");
             db.execSQL("INSERT INTO User VALUES(\'"+ email +"\', \'"+ password +"\');");
             db.close();
 

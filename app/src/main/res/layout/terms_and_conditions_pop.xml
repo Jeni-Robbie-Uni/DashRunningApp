@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_rect_curve"
+    >
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:fontFamily="@font/montserrat"
+        android:padding="10dp"
+        android:text="Terms and Conditions"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/ib_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+
+        android:layout_margin="10dp"
+        android:background="@mipmap/ic_close_bg_round"
+        android:layout_alignEnd="@id/pop_layout"
+
+        />
+
+    <TextView
+        android:id="@+id/pop_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="25dp"
+        android:paddingBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/Title"
+        android:fontFamily="@font/montserrat"
+        android:text="bler bler legal stuff. Please Don't Sue me..." />
+</RelativeLayout>

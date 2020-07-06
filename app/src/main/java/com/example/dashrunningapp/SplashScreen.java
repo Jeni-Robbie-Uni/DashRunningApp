@@ -82,7 +82,7 @@ public class SplashScreen extends AppCompatActivity {
                 @Override
                 public byte[] getBody() {
                     try {
-                        return jsonData == null ? null : jsonData.getBytes("utf-8");
+                        return jsonData.getBytes("utf-8");
                     } catch (UnsupportedEncodingException uee) {
                         VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
                         return null;

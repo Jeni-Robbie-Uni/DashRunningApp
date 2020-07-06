@@ -10,4 +10,7 @@ public class StringConstants {
     public static String getLogin() {
         return "/api/Login";
     }
+    public static String getUserAddress() {
+        return "/api/Users";
+    }
 }

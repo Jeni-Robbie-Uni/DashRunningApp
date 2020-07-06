@@ -20,6 +20,10 @@ class UserDetails {
 
     public UserDetails() {
     }
+    public UserDetails( String userEmail, String userPassword) {
+        email=userEmail;
+        password=userPassword;
+    }
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
