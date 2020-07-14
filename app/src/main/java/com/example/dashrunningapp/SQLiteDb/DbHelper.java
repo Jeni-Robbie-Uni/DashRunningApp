@@ -1,4 +1,4 @@
-package com.example.dashrunningapp;
+package com.example.dashrunningapp.SQLiteDb;
 
 
     import android.content.Context;
@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
     import com.example.dashrunningapp.exceptions.NoStoredUserException;
     import com.example.dashrunningapp.exceptions.TooManyUsersException;
+    import com.example.dashrunningapp.models.UserDetails;
 
     import java.io.FileOutputStream;
 import java.io.IOException;
@@ -134,8 +135,8 @@ import java.io.OutputStream;
             if (cursor.getCount() > 1) {
                 throw new TooManyUsersException();
             }
-            loginDetails.password = cursor.getString(cursor.getColumnIndex("password"));
-            loginDetails.email = cursor.getString(cursor.getColumnIndex("email"));
+            loginDetails.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+            loginDetails.setEmail(cursor.getString(cursor.getColumnIndex("email")));
             cursor.close();
             db.close();
 

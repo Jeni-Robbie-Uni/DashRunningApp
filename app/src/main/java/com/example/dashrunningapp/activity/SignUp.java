@@ -1,4 +1,4 @@
-package com.example.dashrunningapp;
+package com.example.dashrunningapp.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -16,25 +16,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.example.dashrunningapp.SQLiteDb.DbHelper;
+import com.example.dashrunningapp.Misc.JsonFormater;
+import com.example.dashrunningapp.R;
+import com.example.dashrunningapp.Misc.StringConstants;
+import com.example.dashrunningapp.Misc.UserDetailValidation;
+import com.example.dashrunningapp.models.UserDetails;
+import com.example.dashrunningapp.volley.VolleyCustomResponses;
 import com.example.dashrunningapp.exceptions.NoStoredUserException;
 import com.example.dashrunningapp.exceptions.TooManyUsersException;
+import com.example.dashrunningapp.volley.VolleyQueue;
 
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;

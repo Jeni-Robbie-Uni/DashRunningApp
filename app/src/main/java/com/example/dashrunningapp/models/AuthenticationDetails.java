@@ -1,4 +1,4 @@
-package com.example.dashrunningapp;
+package com.example.dashrunningapp.models;
 
 public class AuthenticationDetails {
 

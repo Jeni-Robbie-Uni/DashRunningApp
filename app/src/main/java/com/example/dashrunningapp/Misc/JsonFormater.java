@@ -1,4 +1,4 @@
-package com.example.dashrunningapp;
+package com.example.dashrunningapp.Misc;
 
 import com.google.gson.Gson;
 

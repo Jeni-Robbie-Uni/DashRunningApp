@@ -1,8 +1,6 @@
-package com.example.dashrunningapp;
-import java.util.regex.*;
+package com.example.dashrunningapp.models;
 
-
-class UserDetails {
+public class UserDetails {
     String firstname;
     String email;
     String password;

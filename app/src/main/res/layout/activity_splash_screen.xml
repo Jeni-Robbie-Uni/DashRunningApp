@@ -8,5 +8,5 @@
     android:background="@color/colorPrimary"
 
 
-    tools:context=".SplashScreen"/>
+    tools:context=".activity.SplashScreen"/>
 

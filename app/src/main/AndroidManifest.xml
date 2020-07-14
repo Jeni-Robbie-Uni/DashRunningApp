@@ -17,27 +17,24 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".SignUp"
+            android:name=".activity.SignUp"
             android:label="@string/title_activity_sign_up"
-            android:parentActivityName=".login"
+            android:parentActivityName=".activity.login"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.dashrunningapp.login" />
+                android:value="com.example.dashrunningapp.activity.login" />
         </activity>
-        <activity android:name=".login" />
+        <activity android:name=".activity.login" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".activity.SplashScreen"
             android:theme="@style/SplashScreen" >
 
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme" />
 
 
         <activity
-            android:name=".MainActivity2"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

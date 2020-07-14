@@ -1,4 +1,4 @@
-package com.example.dashrunningapp;
+package com.example.dashrunningapp.volley;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,13 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.example.dashrunningapp.SQLiteDb.DbHelper;
+import com.example.dashrunningapp.activity.MainActivity;
+import com.example.dashrunningapp.activity.login;
+import com.example.dashrunningapp.models.AuthenticationDetails;
+import com.example.dashrunningapp.models.UserDetails;
 
-class VolleyCustomResponses {
+public class VolleyCustomResponses {
 
     public static void  errorResponse(VolleyError error, Context context) {
 

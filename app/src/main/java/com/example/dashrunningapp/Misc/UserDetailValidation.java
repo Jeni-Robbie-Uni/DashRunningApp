@@ -1,4 +1,4 @@
-package com.example.dashrunningapp;
+package com.example.dashrunningapp.Misc;
 
 import android.widget.EditText;
 
