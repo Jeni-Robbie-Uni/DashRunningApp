@@ -1,19 +1,24 @@
 package com.example.dashrunningapp.ui.home;
 
+import android.Manifest;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.dashrunningapp.R;
+import com.example.dashrunningapp.activity.MainActivity;
 
 public class HomeFragment extends Fragment {
-
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -29,5 +34,10 @@ public class HomeFragment extends Fragment {
             }
         });
         return root;
+
+
+
+
+
     }
 }
