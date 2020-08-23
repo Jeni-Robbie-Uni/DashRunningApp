@@ -5,22 +5,22 @@ import java.time.LocalDateTime;
 public class EventDTO
 {
 
-    public String Name;
+    public String name;
 
 
-    public String URL;
+    public String url;
 
 
 
-    public String Location;
+    public String location;
 
 
-    public String City;
+    public String city;
 
     public LocalDateTime dateTime;
 
 
-    public double Distance;
+    public double distance;
 
 
 

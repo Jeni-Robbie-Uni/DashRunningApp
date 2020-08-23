@@ -13,4 +13,8 @@ public class StringConstants {
     public static String getUserAddress() {
         return "/api/Users";
     }
+    public static String getEventAddress() {
+        return "/api/RunningEvents";
+    }
+
 }
