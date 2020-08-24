@@ -6,4 +6,5 @@
     <color name="colorAccent">#036ca6</color>
     <color name="white">#FFFF</color>
     <color name="diaglogue_box_border">#292121</color>
+    <color name="black">#000000</color>
 </resources>

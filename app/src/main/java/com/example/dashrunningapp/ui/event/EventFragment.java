@@ -101,17 +101,10 @@ public class EventFragment extends Fragment {
                 List<EventDTO> list = gson.fromJson(response, listType);
 
                 //creates empty array of string to list size
-                String[] finalStrings = new String[list.size()];
-                int i = 0;
-                //every event in the list
-                for (EventDTO event : list){
-                    //format the string /r/n means slash return /newline
-                    String formattedOutput = event.name + "    |    " + event.city + "\n" + event.dateTime + "\n\n";
-                    finalStrings[i] = formattedOutput;
-                    i++;
-                }
-                mAdapter = new EventAdapter(finalStrings);
+
+                mAdapter = new EventAdapter(m_context, list);
                 recyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener(){
             @Override
@@ -203,10 +196,10 @@ public class EventFragment extends Fragment {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (locationGPS != null) {
-                return locationGPS.getLatitude();
+                return locationGPS.getLongitude();
 
             } else if (locationNetwork !=null){
-                return locationNetwork.getLatitude();
+                return locationNetwork.getLongitude();
             }
             else
                 return null;

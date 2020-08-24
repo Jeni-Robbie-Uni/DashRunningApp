@@ -17,7 +17,7 @@ public class EventDTO
 
     public String city;
 
-    public LocalDateTime dateTime;
+    public String date;
 
 
     public double distance;

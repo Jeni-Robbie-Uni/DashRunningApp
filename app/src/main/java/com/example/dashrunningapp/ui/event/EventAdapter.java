@@ -1,31 +1,47 @@
 package com.example.dashrunningapp.ui.event;
 
+import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashrunningapp.R;
+import com.example.dashrunningapp.models.EventDTO;
+
+import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
-    private String[] mDataset;
+    private List<EventDTO> mDataset;
+    private Context Context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
-        public MyViewHolder(TextView v) {
+        public TextView textName, textCity, textDate;
+
+        public MyViewHolder(View v) {
             super(v);
-            textView = v;
+            textName = v.findViewById(R.id.txtName);
+            textCity = v.findViewById(R.id.txtCity);
+            textDate = v.findViewById(R.id.txtDate);
+        }
+
+        void setDetails(EventDTO event) {
+            textName.setText(event.name);
+            textCity.setText(event.city);
+            textDate.setText(event.date);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public EventAdapter(String[] myDataset) {
+    public EventAdapter(Context context, List<EventDTO> myDataset) {
         mDataset = myDataset;
+        Context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -33,9 +49,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     public EventAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                         int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.my_text_view, parent, false);
-
-        MyViewHolder vh = new MyViewHolder(v);
+        View view = LayoutInflater.from(Context).inflate(R.layout.recycler_view_item, parent, false);
+        MyViewHolder vh = new MyViewHolder(view);
         return vh;
     }
 
@@ -44,13 +59,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
-
+        EventDTO event = mDataset.get(position);
+        holder.setDetails(event);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
