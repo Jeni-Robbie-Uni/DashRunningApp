@@ -66,11 +66,6 @@ public class EventFragment extends Fragment {
         layoutManager = new LinearLayoutManager(m_activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        // String[] array={"hello","again", "friend","of", "a", "friend","I","knew","you","well"};
-
-        // specify an adapter (see also next example)
-        // mAdapter = new EventAdapter(array);
-        // recyclerView.setAdapter(mAdapter);
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         final Context m_context = getContext();
         //Create a JSON object for post request     //surround in try catch mention in report

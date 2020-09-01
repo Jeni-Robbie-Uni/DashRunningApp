@@ -1,6 +1,8 @@
 package com.example.dashrunningapp.ui.event;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
     private List<EventDTO> mDataset;
     private Context Context;
+    //private final View.OnClickListener mOnClickListener = new MyOnClickListener();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -59,8 +62,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        EventDTO event = mDataset.get(position);
+        final EventDTO event = mDataset.get(position);
         holder.setDetails(event);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.url));
+                Context.startActivity(browserIntent);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
