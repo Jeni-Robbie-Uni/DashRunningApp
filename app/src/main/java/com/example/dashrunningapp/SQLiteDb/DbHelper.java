@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+//DBhelper class manages application sqlite database on the device. Checks if db exist and if not creates on with the appropriate tables
+// Allows to check if a user exists in the database
     public class DbHelper extends SQLiteOpenHelper {
 
         private static final String DATABASE_NAME = "Dash.db";
@@ -25,7 +27,7 @@ import java.io.OutputStream;
         private static final String DATABASE_PATH = "/data/data/com.example.dashrunningapp/databases/";
         private final String USER_TABLE = "User";
 
-
+        //DB helper constrcutor
         public DbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.context = context;
@@ -41,7 +43,7 @@ import java.io.OutputStream;
         }
 
         public void createDb(){
-            boolean dbExist = checkDbExist();
+            boolean dbExist = checkDbExist();   //checks if db already exists on device
 
             if(!dbExist){
                 this.getReadableDatabase();
@@ -51,36 +53,31 @@ import java.io.OutputStream;
 
         private boolean checkDbExist(){
             SQLiteDatabase sqLiteDatabase = null;
-
+            //try and open the database
             try{
                 String path = DATABASE_PATH + DATABASE_NAME;
                 sqLiteDatabase = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
             } catch (Exception ex){
             }
-
+            //if database instance exists
             if(sqLiteDatabase != null){
                 sqLiteDatabase.close();
                 return true;
             }
-
             return false;
         }
 //remove?
         private void copyDatabase(){
             try {
                 InputStream inputStream = context.getAssets().open(DATABASE_NAME);
-
                 String outFileName = DATABASE_PATH + DATABASE_NAME;
-
                 OutputStream outputStream = new FileOutputStream(outFileName);
 
                 byte[] b = new byte[1024];
                 int length;
-
                 while ((length = inputStream.read(b)) > 0){
                     outputStream.write(b, 0, length);
                 }
-
                 outputStream.flush();
                 outputStream.close();
                 inputStream.close();
@@ -89,7 +86,6 @@ import java.io.OutputStream;
             }
 
         }
-
         private SQLiteDatabase openDatabase(){
             String path = DATABASE_PATH + DATABASE_NAME;
             db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
@@ -102,7 +98,7 @@ import java.io.OutputStream;
             }
         }
 
-
+        //adds users email and password into dash db user table
         public void AddUser(String email, String password){
             db = openDatabase();
             db.execSQL("CREATE TABLE IF NOT EXISTS User(email VARCHAR,password VARCHAR);");
@@ -111,44 +107,35 @@ import java.io.OutputStream;
             db.close();
 
         }
+        //if a user exists already when adding another i.e. log in as somone else call this function to delete all other stored users
         public void DropUserTable(){
             db.execSQL("DROP TABLE IF EXISTS User;");
         }
 
-
+        //Checks to see if user is in table and if so returns user object
         public UserDetails checkUserExist() throws NoStoredUserException, TooManyUsersException {
-
-
             UserDetails loginDetails = new UserDetails();
-
             String[] columns = {"email", "password"};
+
             db = openDatabase();
-            db.execSQL("CREATE TABLE IF NOT EXISTS User(email VARCHAR,password VARCHAR);");
-            Cursor cursor = db.query(USER_TABLE, columns, null, null, null, null, null);
+            db.execSQL("CREATE TABLE IF NOT EXISTS User(email VARCHAR,password VARCHAR);"); //if user table doesnt exist it will create one
+            Cursor cursor = db.query(USER_TABLE, columns, null, null, null, null, null);    //query user table for all records and holds info in cursor
 
             if (cursor != null && cursor.getCount()>0) {
-                cursor.moveToFirst();
+                cursor.moveToFirst();       //selects first record
             }
             else
-                throw new NoStoredUserException();
+                throw new NoStoredUserException();      //throw exception if none exist
 
             if (cursor.getCount() > 1) {
-                throw new TooManyUsersException();
+                throw new TooManyUsersException();      //throw exception when too many user, dont know which one to log in with
             }
+            //Sets login detail properties to send for API verification
             loginDetails.setPassword(cursor.getString(cursor.getColumnIndex("password")));
             loginDetails.setEmail(cursor.getString(cursor.getColumnIndex("email")));
             cursor.close();
             db.close();
-
-
             return loginDetails;
-
-
         }
 
-
-
-
     }
-
-

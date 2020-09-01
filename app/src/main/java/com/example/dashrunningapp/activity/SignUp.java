@@ -142,27 +142,27 @@ public class SignUp extends AppCompatActivity {
                 boolean allValid= true;
 
                 if (!UserDetailValidation.IsEmailValid(email)) {
-                    email.setError("Invalid email. Needs to be an email fam e.g. example@gmail.com");
+                    email.setError("Invalid email. Needs to be an email e.g. example@gmail.com");
                     email.setText("");
                     allValid=false;
                 }
 
                 if (UserDetailValidation.IsFieldEmpty(f_name.getText().toString()))
                 {
-                    f_name.setError("@String/EmptyField");
+                    f_name.setError("Empty Field");
                     f_name.setText("");
                     allValid=false;
                 }
                 if (UserDetailValidation.IsFieldEmpty(s_name.getText().toString()))
                 {
-                    s_name.setError("@String/EmptyField");
+                    s_name.setError("EmptyField");
                     s_name.setText("");
                     allValid=false;
                 }
 
                 if (!UserDetailValidation.IsPasswordValid(password, 13,5))
                 {
-                    password.setError("@String/invalid_password");
+                    password.setError("Invalid password, password must be between 5 and 14 characters, contain a number and a special chracter e.g. !&%");
                     password.setText("");
                     allValid=false;
                 }
