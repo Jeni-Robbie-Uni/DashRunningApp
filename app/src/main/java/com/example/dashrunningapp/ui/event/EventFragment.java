@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -49,7 +51,8 @@ public class EventFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState)
+    {
         final Activity m_activity = getActivity();
         ActivityCompat.requestPermissions(m_activity,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -68,71 +71,79 @@ public class EventFragment extends Fragment {
 
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         final Context m_context = getContext();
+
         //Create a JSON object for post request     //surround in try catch mention in report
-        String latitude = getLatitude(locationManager).toString();
-        String longitude = getLongitude(locationManager).toString();
 
+        Double doubLatitude = getLatitude(locationManager);
+        Double doubLongitude = getLongitude(locationManager);
+        String latitude = StringConstants.getBasicLat();
+        String longitude = StringConstants.getBasicLong();
 
-        // Instantiate the RequestQueue.
-        final RequestQueue queue = VolleyQueue.getInstance(m_context).getRequestQueue();
-
-        String url = StringConstants.getServerAddress() + StringConstants.getEventAddress() + "/" + longitude + "/" + latitude;
-        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                // Get the object Type for a List of EventDTO objects from the system to pass into gson for conversion
-                Type listType = new TypeToken<List<EventDTO>>() {
-                }.getType();
-                Gson gson = new Gson();
-                //converts json sto objects of event type
-                List<EventDTO> list = gson.fromJson(response, listType);
-
-                //creates empty array of string to list size
-
-                mAdapter = new EventAdapter(m_context, list);
-                recyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
+        if (doubLatitude !=null  && doubLongitude !=null) {
+            try {
+                latitude = doubLatitude.toString();
+                longitude = doubLongitude.toString();
+            } catch (Exception ex) {
+                Toast.makeText(m_context, "Cannot determine location", Toast.LENGTH_LONG).show();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                if (response != null) {
-                    String responseString = new String(response.data);
-                    // can get more details such as response.headers
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-                return Response.error(new VolleyError());
-            }
-        };
-
-        try {
-            queue.add(stringRequest2);
-        } catch (Exception ex) {
-            Log.e("Error", ex.toString());
+        }
+        else
+        {
+        Toast.makeText(m_context, "Cannot determine location", Toast.LENGTH_LONG).show();
         }
 
-/*
 
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            OnGPS();
-        } else {
-            getLocation(textView, locationManager);
-        }*/
+            // Instantiate the RequestQueue.
+            final RequestQueue queue = VolleyQueue.getInstance(m_context).getRequestQueue();
+
+            String url = StringConstants.getServerAddress() + StringConstants.getEventAddress() + "/" + longitude + "/" + latitude;
+            StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    // Get the object Type for a List of EventDTO objects from the system to pass into gson for conversion
+                    Type listType = new TypeToken<List<EventDTO>>() {
+                    }.getType();
+                    Gson gson = new Gson();
+                    //converts json sto objects of event type
+                    List<EventDTO> list = gson.fromJson(response, listType);
+
+                    //creates empty array of string to list size
+
+                    mAdapter = new EventAdapter(m_context, list);
+                    recyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
 
 
-        return root;
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    if (response != null) {
+                        String responseString = new String(response.data);
+                        // can get more details such as response.headers
+                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                    }
+                    return Response.error(new VolleyError());
+                }
+            };
+
+            try {
+                queue.add(stringRequest2);
+            } catch (Exception ex) {
+                Log.e("Error", ex.toString());
+            }
+
+    return root;
 
     }
 

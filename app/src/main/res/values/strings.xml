@@ -25,9 +25,14 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_event">Events Near Me</string>
-
-
-
+    <string name="menu_track">Track My Run</string>
+    <string name="track">Track</string>
+    <string name="stopwatch">Stopwatch</string>
+    <string name="defaultTime">00:00:00</string>
+    <string name="Elevation">Net Elevation</string>
+    <string name="distance">Distance</string>
+    <string name="charDash">-</string>
+    <string name="elavation">Elavation</string>
 
 
 </resources>
