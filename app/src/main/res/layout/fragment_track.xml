@@ -10,11 +10,8 @@
         android:gravity="center_horizontal"
         android:layout_marginVertical="10dp"
         >
-
-
-
-        <TextView
-            android:id="@+id/StopWatch"
+        <Chronometer
+            android:id="@+id/stopWatch"
             android:layout_marginVertical="20dp"
 
             android:layout_width="wrap_content"
@@ -62,7 +59,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-            />
+
         </TableRow>
 
         <TableRow
@@ -84,7 +81,7 @@
                 android:text="@string/charDash"
                 android:background="@drawable/black_rectangle"
                 android:layout_marginEnd="30dp"/>
-            />
+
 
             <TextView
                 android:textAlignment="center"
@@ -124,7 +121,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/Play"
+            android:id="@+id/btn_play"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"

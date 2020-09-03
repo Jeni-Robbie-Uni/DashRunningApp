@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stoprun_popop"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_rect_curve"
+    >
+
+    <TextView
+        android:id="@+id/stopRunChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:fontFamily="@font/montserrat"
+        android:padding="10dp"
+        android:text="Stop?"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/stopRunText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="25dp"
+        android:paddingBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/stopRunChoice"
+        android:fontFamily="@font/montserrat"
+        android:text="Do you wish to continue your run or are you finished?" />
+
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/montserrat"
+        android:layout_below="@id/stopRunText"
+        android:text="Continue"
+        />
+    <Button
+        android:id="@+id/btn_finsihed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/montserrat"
+        android:layout_below="@id/btn_continue"
+        android:text="Finished!"
+        />
+
+</RelativeLayout>
