@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.dashrunningapp.Misc.StringConstants;
 import com.example.dashrunningapp.R;
 import com.example.dashrunningapp.models.EventDTO;
+import com.example.dashrunningapp.models.geoLocation;
 import com.example.dashrunningapp.volley.VolleyQueue;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -70,15 +71,14 @@ public class EventFragment extends Fragment {
 
         //Create a JSON object for post request     //surround in try catch mention in report
 
-        Double doubLatitude = getLatitude(locationManager);
-        Double doubLongitude = getLongitude(locationManager);
+        geoLocation myLocation = getLocation(locationManager);
         String latitude = StringConstants.getBasicLat();
         String longitude = StringConstants.getBasicLong();
 
-        if (doubLatitude !=null  && doubLongitude !=null) {
+        if (myLocation.longitude !=null || myLocation.latitude != null) {
             try {
-                latitude = doubLatitude.toString();
-                longitude = doubLongitude.toString();
+                latitude = String.valueOf(myLocation.latitude);
+                longitude = String.valueOf(myLocation.longitude);
             } catch (Exception ex) {
                 Toast.makeText(m_context, "Cannot determine location", Toast.LENGTH_LONG).show();
             }
@@ -143,9 +143,10 @@ public class EventFragment extends Fragment {
     }
 
 //clean up longitude and latiutde as object
-    private Double getLongitude(LocationManager locationManager) {
+    private geoLocation getLocation(LocationManager locationManager) {
         final Context m_context = getContext();
         final Activity m_activity = getActivity();
+        geoLocation myLocation = new geoLocation();
 
         //Check if user has given persmission to access location
         if (ActivityCompat.checkSelfPermission(
@@ -157,42 +158,16 @@ public class EventFragment extends Fragment {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (locationGPS != null) {
-                    return locationGPS.getLongitude(); // return gps location if available
+                    myLocation.longitude= locationGPS.getLongitude(); //  gps location if available
+                    myLocation.latitude= locationGPS.getLatitude(); // return gps location if available
+                    return myLocation;
                 }
             }
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 Location locationNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (locationNetwork != null) {
-                    return locationNetwork.getLongitude();   //return network location as backup
-                }
-            }
-
-            return null; //none are available
-        }
-        return null;
-    }
-
-    private Double getLatitude(LocationManager locationManager) {
-        final Context m_context = getContext();
-        final Activity m_activity = getActivity();
-
-        //Check if user has given persmission to access location
-        if (ActivityCompat.checkSelfPermission(
-                m_context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                m_context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(m_activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);    //ask for permission
-        } else {
-            //check which provider is enabled gps or network
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (locationGPS != null) {
-                    return locationGPS.getLatitude(); // return gps location if available
-                }
-            }
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                Location locationNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (locationNetwork != null) {
-                    return locationNetwork.getLatitude();   //return network location as backup
+                    myLocation.longitude= locationNetwork.getLongitude();   // network location as backup
+                    myLocation.latitude=locationNetwork.getLatitude();   // network location as backup
                 }
             }
 

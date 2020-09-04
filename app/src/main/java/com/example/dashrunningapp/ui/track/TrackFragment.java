@@ -2,6 +2,8 @@ package com.example.dashrunningapp.ui.track;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -139,5 +142,39 @@ public class TrackFragment extends Fragment {
         mPopupWindow.showAtLocation( rLayout, Gravity.CENTER,0,0);
 
     }
+    /*
+    private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 0; // in Meters
+    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 0;
+
+    // methods omitted
+
+    LocationListener myLocationListener = new LocationListener()
+    {
+        public void onLocationChanged(Location loc2)
+        {
+            Toast.makeText(MainActivity.this,
+                    "Location has changed",
+                    Toast.LENGTH_LONG).show();
+            if(loc2 != null)
+            {
+                latitude.setText("Current Latitude: " + String.valueOf(loc2.getLatitude()));
+                longitude.setText("Current Longitude: " + String.valueOf(loc2.getLongitude()));
+                float[] results = new float[1];
+                Location.distanceBetween(lat1, lon1, loc2.getLatitude(), loc2.getLongitude(), results);
+                System.out.println("Distance is: " + results[0]);
+
+                dist += results[0];
+                DecimalFormat df = new DecimalFormat("#.##"); // adjust this as appropriate
+                distanceText.setText(df.format(dist));
+
+                Toast.makeText(MainActivity.this,
+                        "Distance",
+                        Toast.LENGTH_LONG).show();
+                lat1=loc2.getLatitude();
+                lon1=loc2.getLongitude();
+            }
+        }
+        */
+
 
 }
