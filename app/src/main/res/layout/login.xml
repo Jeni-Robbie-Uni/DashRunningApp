@@ -28,7 +28,8 @@
                 android:id="@+id/dash_logo"
                 android:layout_width="match_parent"
                 android:layout_height="137dp"
-                app:srcCompat="@drawable/dash_icon1" />
+                app:srcCompat="@drawable/dash_icon1"
+                android:contentDescription="@string/dash_logo" />
 
             <TextView
                 android:id="@+id/company_slogan"

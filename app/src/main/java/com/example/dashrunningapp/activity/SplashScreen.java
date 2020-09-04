@@ -17,7 +17,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.dashrunningapp.SQLiteDb.DbHelper;
 import com.example.dashrunningapp.Misc.JsonFormater;
-import com.example.dashrunningapp.Misc.StringConstants;
+import com.example.dashrunningapp.Misc.ApiStringConstants;
 import com.example.dashrunningapp.models.UserDetails;
 import com.example.dashrunningapp.volley.VolleyCustomResponses;
 import com.example.dashrunningapp.exceptions.NoStoredUserException;
@@ -43,88 +43,89 @@ public class SplashScreen extends AppCompatActivity {
         final Context m_context = getApplicationContext();
 
 
-        //Create instance of database helper
+        //Create instance of database helper to interact with device internal database
         DbHelper databaseHelper = new DbHelper(SplashScreen.this);
 
 
+        //If database exists, check if there are stored credentials and store
+        UserDetails tempUserCheck;
         try {
-            //If database exists, check if there are stored credentials and store
-            UserDetails tempUserCheck = databaseHelper.checkUserExist();
-
-            //Create a JSON object for post request to format string for API
-            JSONObject userJsonObject = null;
-            try {
-                //Convert UserDetails to Json Object before converting to string for request
-                userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(tempUserCheck));
-            } catch (Exception ex) {    //If fails just have user login manually
-                Log.i("Exception:", ex.toString());
-                Intent intentLogin = new Intent(this, login.class);
-                startActivity(intentLogin);
-            }
-
-            //This should never be null as database helper throws that exception
-           if (userJsonObject==null){
-               Intent intentLogin = new Intent(this, login.class);
-               startActivity(intentLogin);
-           }
-            final String jsonData = userJsonObject.toString();
-
-
-            // Instantiate the RequestQueue.
-            final RequestQueue queue = VolleyQueue.getInstance(m_context).
-                    getRequestQueue();
-
-            //Authorise with API
-            String url = StringConstants.getServerAddress() + StringConstants.getLogin();
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, VolleyCustomResponses.GenerateTokenResponse(m_context), VolleyCustomResponses.GenerateTokenError(m_context))
-            {
-                @Override
-                public String getBodyContentType()
-                {
-                return "application/json; charset=utf-8";    //without this is expects plain text
-                }
-                //cant convert bytes= volley cant send to server i.e cause its custom request or corrupt
-                @Override
-                public byte[] getBody() {
-                    try {
-                        return jsonData.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
-                        return null;
-                    }
-                }
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {     //Overridden to get post request response body
-                    String responseString;
-                    if (response != null) {
-                        responseString = new String(response.data);
-                        // can get more details such as response.headers
-                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                    return Response.error(new VolleyError());
-                }
-            };
-
-            try {
-                queue.add(stringRequest);
-            } catch (Exception ex) {            //If token can not be generated they must login
-                Log.e("Error", ex.toString());
-                Intent intent = new Intent(this, login.class);
-                startActivity(intent);
-            }
-
-        } catch (NoStoredUserException ex) { //If no users stored  make user login
-            Log.e("Catch", ex.toString());
+            tempUserCheck = databaseHelper.checkUserExist();
+        } catch (NoStoredUserException e) {
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
-
-        } catch (TooManyUsersException ex) { //If more one user stored drop table and make user login
-            Log.e("Catch", ex.toString());
+            e.printStackTrace();
+            return;
+        } catch (TooManyUsersException e) {
+            e.printStackTrace();
             databaseHelper.DropUserTable();
             Intent intent = new Intent(this, login.class);
             startActivity(intent);
+            return;
         }
+
+
+        //Create a JSON object for post request to format string for API
+        JSONObject userJsonObject;
+        try {
+            //Convert UserDetails to Json Object before converting to string for request
+            userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(tempUserCheck));
+        } catch (Exception ex) {    //If fails just have user login manually
+            ex.printStackTrace();
+            Intent intentLogin = new Intent(this, login.class);
+            startActivity(intentLogin);
+            return;
+        }
+
+        //This should never be null as database helper throws that exception
+        final String jsonData = userJsonObject.toString();
+
+
+        // Instantiate the RequestQueue or get current queue
+        final RequestQueue requestQueue = VolleyQueue.getInstance(m_context).getRequestQueue();
+
+        //Create server request address
+        String url = ApiStringConstants.getServerAddress() + ApiStringConstants.getLogin();
+
+        //send post request with custom response and error handler
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, VolleyCustomResponses.GenerateTokenResponse(m_context), VolleyCustomResponses.GenerateTokenError(m_context)) {
+            @Override
+            public String getBodyContentType() {
+                return ApiStringConstants.getCharset();    //allows volley to read API response
+            }
+
+            //converted string to be sent into bytes. if not volley cant send to server
+            @Override
+            public byte[] getBody() {
+                try {
+                    return jsonData.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
+                    return null;
+                }
+            }
+            //define how response is read and determine if request was successful or not
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {     //Overridden to get post request response body
+                String responseString;
+                if (response != null) {
+                    responseString = new String(response.data);
+                    // can get more details such as response.headers
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+                return Response.error(new VolleyError());
+            }
+        };
+
+        try {
+            requestQueue.add(stringRequest);
+        } catch (Exception ex) {            //If token can not be generated they must login
+            Log.e("Error", ex.toString());
+            Intent intent = new Intent(this, login.class);
+            startActivity(intent);
+        }
+
+
     }
 
 }

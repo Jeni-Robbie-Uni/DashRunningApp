@@ -6,20 +6,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
-
-    public class JsonFormater {
-
-        static public <T> String convertToJString(T x) {
-            String jsonString="";
-            return jsonString= new Gson().toJson(x);
-        }
-        static public JSONObject convertToJsonObj(String x) throws JSONException {
-          return new JSONObject(x);
-        }
-
-
+//formats objects and strings to json strings and objects
+public class JsonFormater {
+    //Converts objects to json strings
+    static public <T> String convertToJString(T x) {
+        String jsonString="";
+        return jsonString= new Gson().toJson(x);
     }
+    //converts json strings to json objects
+    static public JSONObject convertToJsonObj(String x) throws JSONException {
+      return new JSONObject(x);
+    }
+}
 
 
 

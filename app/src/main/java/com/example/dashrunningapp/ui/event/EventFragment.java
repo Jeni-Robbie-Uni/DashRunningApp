@@ -26,7 +26,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
-import com.example.dashrunningapp.Misc.StringConstants;
+import com.example.dashrunningapp.Misc.ApiStringConstants;
+import com.example.dashrunningapp.Misc.ErrorStrings;
+import com.example.dashrunningapp.Misc.MiscStringConstants;
 import com.example.dashrunningapp.R;
 import com.example.dashrunningapp.models.EventDTO;
 import com.example.dashrunningapp.models.geoLocation;
@@ -51,15 +53,17 @@ public class EventFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState)
     {
         final Activity m_activity = getActivity();
+
+        //get permission request from manifest
         ActivityCompat.requestPermissions(m_activity,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
 
         View root = inflater.inflate(R.layout.fragment_event, container, false);
+        //set reference to event frag recycler view
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        // only doing 10 events so this will help performance
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -69,58 +73,62 @@ public class EventFragment extends Fragment {
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         final Context m_context = getContext();
 
-        //Create a JSON object for post request     //surround in try catch mention in report
-
+        //get longitude latitude geo location
         geoLocation myLocation = getLocation(locationManager);
-        String latitude = StringConstants.getBasicLat();
-        String longitude = StringConstants.getBasicLong();
+        //assign backup values to strings so uk location still sent
+        String latitude = MiscStringConstants.getBasicLat();
+        String longitude = MiscStringConstants.getBasicLong();
 
-        if (myLocation.longitude !=null || myLocation.latitude != null) {
+        //convert geolocation long and lat to string
+        if (myLocation != null) {
             try {
-                latitude = String.valueOf(myLocation.latitude);
-                longitude = String.valueOf(myLocation.longitude);
+                latitude = String.valueOf(myLocation.getLatitude());
+                longitude = String.valueOf(myLocation.getLongitude());
             } catch (Exception ex) {
-                Toast.makeText(m_context, "Cannot determine location", Toast.LENGTH_LONG).show();
+                Toast.makeText(m_context, ErrorStrings.getLoctaionNotFoundError(), Toast.LENGTH_LONG).show();
             }
         }
         else
         {
-        Toast.makeText(m_context, "Cannot determine location", Toast.LENGTH_LONG).show();
+            //error message and request carries on with default values
+            Toast.makeText(m_context, ErrorStrings.getLoctaionNotFoundError(), Toast.LENGTH_LONG).show();
         }
 
 
-            // Instantiate the RequestQueue.
-            final RequestQueue queue = VolleyQueue.getInstance(m_context).getRequestQueue();
+        // Instantiate the RequestQueue or return exiting request queue
+        final RequestQueue queue = VolleyQueue.getInstance(m_context).getRequestQueue();
 
-            String url = StringConstants.getServerAddress() + StringConstants.getEventAddress() + "/" + longitude + "/" + latitude;
-            StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        //generate server address to target request
+        String url = ApiStringConstants.getServerAddress() + ApiStringConstants.getEventAddress() + "/" + longitude + "/" + latitude;
 
-                @Override
-                public void onResponse(String response) {
-                    // Get the object Type for a List of EventDTO objects from the system to pass into gson for conversion
-                    Type listType = new TypeToken<List<EventDTO>>() {}.getType();
-                    Gson gson = new Gson();
-                    //converts json sto objects of event type
-                    List<EventDTO> list = gson.fromJson(response, listType);
+         //create get request to api for events near loaction
+        //change to post when time as sensitive info
+        StringRequest eventsRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // Get the object Type for a List of EventDTO objects from the system to pass into gson for conversion
+                Type listType = new TypeToken<List<EventDTO>>() {}.getType();
+                Gson gson = new Gson();
+                //converts json objects of event type
+                List<EventDTO> list = gson.fromJson(response, listType);
 
-                    //creates empty array of string to list size
 
-                    mAdapter = new EventAdapter(m_context, list);
-                    recyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-                }
+                mAdapter = new EventAdapter(m_context, list);
+                recyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    Toast.makeText(m_context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();
                 }
             }) {
+            //converted string to be sent into bytes. if not volley cant send to server
                 @Override
                 public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
+                    return ApiStringConstants.getCharset();
                 }
-
-
+            //define how response is read and determine if request was successful or not
                 @Override
                 protected Response<String> parseNetworkResponse(NetworkResponse response) {
                     if (response != null) {
@@ -131,9 +139,9 @@ public class EventFragment extends Fragment {
                     return Response.error(new VolleyError());
                 }
             };
-
+            //events request to volley request queue
             try {
-                queue.add(stringRequest2);
+                queue.add(eventsRequest);
             } catch (Exception ex) {
                 Log.e("Error", ex.toString());
             }
@@ -142,7 +150,7 @@ public class EventFragment extends Fragment {
 
     }
 
-//clean up longitude and latiutde as object
+//returns geolocation object after determining permissions are in place
     private geoLocation getLocation(LocationManager locationManager) {
         final Context m_context = getContext();
         final Activity m_activity = getActivity();
@@ -154,20 +162,21 @@ public class EventFragment extends Fragment {
                 m_context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(m_activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);    //ask for permission
         } else {
-            //check which provider is enabled gps or network
+            //check which provider is enabled gps
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);  //if so get last known loacation
                 if (locationGPS != null) {
-                    myLocation.longitude= locationGPS.getLongitude(); //  gps location if available
-                    myLocation.latitude= locationGPS.getLatitude(); // return gps location if available
+                    myLocation.setLongitude(locationGPS.getLongitude()); //  gps location if available
+                    myLocation.setLatitude(locationGPS.getLatitude()); // return gps location if available
                     return myLocation;
                 }
             }
+            //if unable to get last gps location use network provider
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 Location locationNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (locationNetwork != null) {
-                    myLocation.longitude= locationNetwork.getLongitude();   // network location as backup
-                    myLocation.latitude=locationNetwork.getLatitude();   // network location as backup
+                    myLocation.setLongitude(locationNetwork.getLongitude());   // network location as backup
+                    myLocation.setLatitude(locationNetwork.getLatitude());   // network location as backup
                 }
             }
 

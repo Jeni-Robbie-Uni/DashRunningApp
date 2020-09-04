@@ -24,10 +24,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.example.dashrunningapp.Misc.ErrorStrings;
 import com.example.dashrunningapp.SQLiteDb.DbHelper;
 import com.example.dashrunningapp.Misc.JsonFormater;
 import com.example.dashrunningapp.R;
-import com.example.dashrunningapp.Misc.StringConstants;
+import com.example.dashrunningapp.Misc.ApiStringConstants;
 import com.example.dashrunningapp.Misc.UserDetailValidation;
 import com.example.dashrunningapp.models.UserDetails;
 import com.example.dashrunningapp.volley.VolleyCustomResponses;
@@ -42,12 +43,13 @@ import java.io.UnsupportedEncodingException;
 
 
 
-
+//Sign up activity class is responsible for regestration. Validates user credentials then sends request to API.
 public class SignUp extends AppCompatActivity {
 
+    //variables accessed by multiple override functions
     private PopupWindow mPopupWindow;
     private Boolean agree=false;
-    private UserDetails current_user;
+    private UserDetails currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,7 +97,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
             LayoutInflater inflater = (LayoutInflater) m_context.getSystemService(LAYOUT_INFLATER_SERVICE);
             //PAss in the layout with correct message and the Id of button/label that it is to be positioned above
-            CustomPopUpWindow(inflater.inflate(R.layout.pop_layout,null), findViewById(R.id.password_label_view));
+            CustomPopUpWindow(inflater.inflate(R.layout.password_popup,null), findViewById(R.id.password_label_view));
 
             }
 
@@ -126,9 +128,6 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
-
-
-
         //*************************************************************
 
 
@@ -142,96 +141,108 @@ public class SignUp extends AppCompatActivity {
                 boolean allValid= true;
 
                 if (!UserDetailValidation.IsEmailValid(email)) {
-                    email.setError("Invalid email. Needs to be an email e.g. example@gmail.com");
+                    email.setError(ErrorStrings.getInvalidEmailError());
                     email.setText("");
                     allValid=false;
                 }
 
                 if (UserDetailValidation.IsFieldEmpty(f_name.getText().toString()))
                 {
-                    f_name.setError("Empty Field");
+                    f_name.setError(ErrorStrings.getEmptyFieldError());
                     f_name.setText("");
                     allValid=false;
                 }
                 if (UserDetailValidation.IsFieldEmpty(s_name.getText().toString()))
                 {
-                    s_name.setError("EmptyField");
+                    s_name.setError(ErrorStrings.getEmptyFieldError());
                     s_name.setText("");
                     allValid=false;
                 }
 
-                if (!UserDetailValidation.IsPasswordValid(password, 13,5))
+                if (!UserDetailValidation.IsPasswordValid(password))
                 {
-                    password.setError("Invalid password, password must be between 5 and 14 characters, contain a number and a special chracter e.g. !&%");
+                    password.setError(ErrorStrings.getPasswordInvalidError());
                     password.setText("");
                     allValid=false;
                 }
                 if (!agree)
                 {
                     allValid = false;
-                    Toast.makeText(m_context, "Must Agree to Terms and conditions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(m_context, ErrorStrings.getTermsNotAgreedError(), Toast.LENGTH_LONG).show();
 
                 }
 
+                //Once all credentials have been internally validated
                 if (allValid) {
-                    //Create instance of user deta
-                    current_user = new UserDetails(f_name.getText().toString(), s_name.getText().toString(), email.getText().toString(), password.getText().toString());
+                    //instantiate user details object with validated field data
+                    currentUser = new UserDetails(f_name.getText().toString(), s_name.getText().toString(), email.getText().toString(), password.getText().toString());
 
                     //Create a JSON object for post request
-                    JSONObject userJsonObject = null;
+                    JSONObject userJsonObject;
                     try {
-                        userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(current_user));
+                        userJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(currentUser));
                     } catch (Exception ex) {
                         Log.i("Error", ex.toString());
+                        Toast.makeText(m_context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();
+                        return; //exit from further request procedure
                     }
+                    //Convert to string to post
+                    final String userAuthenticateJsonData = userJsonObject.toString();
 
-                    final String jsonData = userJsonObject == null ? null : userJsonObject.toString();
-
-                    // Instantiate the RequestQueue.
+                    // Instantiate new RequestQueue or get existing queue
                     final RequestQueue queue = VolleyQueue.getInstance(m_context).getRequestQueue();
 
-                    String url = StringConstants.getServerAddress() + StringConstants.getUserAddress();
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    //Build appropriate url address
+                    String url = ApiStringConstants.getServerAddress() + ApiStringConstants.getUserAddress();
+
+                    //Send Authenticat Post Request. Call error handler and define how response is read and handled
+                    StringRequest authenticationStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.i("VOLLEY", response);
-                            DbHelper databaseHelper= new DbHelper(m_context);
-                            databaseHelper.AddUser(current_user.getEmail(), current_user.getPassword());
+                            DbHelper databaseHelper= new DbHelper(m_context);       //used to interact with database
+                            databaseHelper.AddUser(currentUser.getEmail(), currentUser.getPassword());
 
                             try {
                                 UserDetails tempUserCheck = databaseHelper.checkUserExist();
                                 //Create a JSON object for post request
-                                JSONObject userJsonObject2= null;
+                                JSONObject userAuthorizeJsonObject;
                                 try {
-                                    userJsonObject2 = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(tempUserCheck));
+                                    //Convert user detail object to json object
+                                    userAuthorizeJsonObject = JsonFormater.convertToJsonObj(JsonFormater.convertToJString(tempUserCheck));
                                 } catch (Exception ex) {
                                     Log.i("Error", ex.toString());
-                                    Toast.makeText(m_context, "Unknown Error: Please Contact Support", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(m_context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();  //display error
                                     Intent intent = new Intent(m_context, login.class);     //Exit back to login Page
                                     startActivity(intent);
+                                    return;
                                 }
+                                //Convert json object to string for post request
+                                final String authorizeUserStringJsonData = userAuthorizeJsonObject.toString();
 
-                                final String jsonData2 = userJsonObject2 == null ? null : userJsonObject2.toString();
+                                //Build API address string
+                                String url2 = ApiStringConstants.getServerAddress() + ApiStringConstants.getLogin();
 
-                                //Authorise with API
-                                String url2 = StringConstants.getServerAddress() + StringConstants.getLogin();
-                                StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url2, VolleyCustomResponses.GenerateTokenResponse(m_context), VolleyCustomResponses.GenerateTokenError(m_context))
+                                //Build Authorisation user request with custom error and response handlers
+                                StringRequest authorizationStringRequest = new StringRequest(Request.Method.POST, url2, VolleyCustomResponses.GenerateTokenResponse(m_context), VolleyCustomResponses.GenerateTokenError(m_context))
                                 {
                                     @Override
                                     public String getBodyContentType() {
-                                        return "application/json; charset=utf-8";
+                                        return ApiStringConstants.getCharset();  //How to read response from API
                                     }
 
-                                    //cant convert bytes= volley cant send to server i.e cause its custom request or corript
+                                    //converted string to be sent into bytes. if not volley cant send to server
                                     @Override
                                     public byte[] getBody() {
                                         try {
-                                            return jsonData2 == null ? null : jsonData2.getBytes("utf-8");
+                                            return authorizeUserStringJsonData.getBytes("utf-8");
                                         } catch (UnsupportedEncodingException uee) {
-                                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
+                                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", authorizeUserStringJsonData, "utf-8");
                                             return null;
                                         }
                                     }
+
+                                    //define how response is read and determine if request was successful or not
                                     @Override
                                     protected Response<String> parseNetworkResponse(NetworkResponse response) {
                                         if (response != null) {
@@ -242,13 +253,17 @@ public class SignUp extends AppCompatActivity {
                                         return Response.error(new VolleyError());
                                     }
                                 };
-
+                                //Add request to queue else return to login activity
                                 try {
-                                    queue.add(stringRequest2);
+                                    queue.add(authorizationStringRequest);
                                 } catch (Exception ex) {
                                     Log.e("Error", ex.toString());
+                                    Toast.makeText(m_context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();  //display error
+                                    Intent intent = new Intent(m_context, login.class);
+                                    startActivity(intent);
                                 }
 
+                            //Handle internal database exceptions thrown by making users log in
                             } catch (NoStoredUserException ex) {
                                 Log.e("Catch", ex.toString());
                                 Intent intent = new Intent(m_context, login.class);
@@ -262,28 +277,27 @@ public class SignUp extends AppCompatActivity {
 
                             }
 
-
-
-
                         }
                     }, VolleyCustomResponses.GenerateSignUpError(m_context,email))
-                    {
+                    {   //override functions for authenticate request
+
+                        //How to read response from API
                         @Override
                         public String getBodyContentType() {
                             return "application/json; charset=utf-8";
                         }
 
-                        //cant convert bytes= volley cant send to server i.e cause its custom request or corript
+                        //converted string to be sent into bytes. if not volley cant send to server
                         @Override
                         public byte[] getBody() {
                             try {
-                                return jsonData == null ? null : jsonData.getBytes("utf-8");
+                                return userAuthenticateJsonData.getBytes("utf-8");
                             } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonData, "utf-8");
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", userAuthenticateJsonData, "utf-8");
                                 return null;
                             }
                         }
-
+                        //define how response is read and determine if request was successful or not
                         @Override
                         protected Response<String> parseNetworkResponse(NetworkResponse response) {
                             if (response != null) {
@@ -295,11 +309,14 @@ public class SignUp extends AppCompatActivity {
                         }
                     };
 
-
+                    //Add request to queue else return to login activity
                     try {
-                        queue.add(stringRequest);
+                        queue.add(authenticationStringRequest);
                     } catch (Exception ex) {
                         Log.e("Error", ex.toString());
+                        Toast.makeText(m_context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();  //display error
+                        Intent intent = new Intent(m_context, login.class);
+                        startActivity(intent);
                     }
 
                 }
@@ -312,7 +329,8 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private void CustomPopUpWindow(View customView, View rLayout){
+    //Function that defines pop up window position and view on UI and also defines button click logic
+    private void CustomPopUpWindow(View customView, View layout){
         // Initialize a new instance of popup window
         mPopupWindow = new PopupWindow(
                 customView,
@@ -321,7 +339,7 @@ public class SignUp extends AppCompatActivity {
         );
 
         // Set an elevation value for popup window
-        // Call requires API level 21
+        //Elevation option only for os above 21
         if(Build.VERSION.SDK_INT>=21){
             mPopupWindow.setElevation(5.0f);
         }
@@ -338,7 +356,7 @@ public class SignUp extends AppCompatActivity {
             }
         });
         // Finally, show the popup window at the center location of root relative layout
-        mPopupWindow.showAtLocation( rLayout,Gravity.CENTER,0,0);
+        mPopupWindow.showAtLocation( layout,Gravity.CENTER,0,0);
 
     }
 

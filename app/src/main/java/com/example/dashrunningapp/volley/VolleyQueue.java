@@ -5,7 +5,8 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-//Singleton volley queue class that creates or retrieves the queue
+//wrapping around volley request queue into Singleton class that creates or retrieves the queue
+//followed android studio tutorial found in report appendices
 //Only one instance of class is made at splashscreen and persisted for the lifetime of the application
 public class VolleyQueue {
 
@@ -19,14 +20,14 @@ public class VolleyQueue {
         requestQueue = getRequestQueue();   //
 
     }
-    //Under the hood volley function
+    //public getter. if instance of volley queue object exists it will return it, if not will create one
     public static synchronized VolleyQueue getInstance(Context context) {
         if (instance == null) {
-            instance = new VolleyQueue(context);
+            instance = new VolleyQueue(context);    //if
         }
         return instance;
     }
-//public getter. if instance of queue exists it will return it, if not will create one
+//public getter. if a request queue exists (created when volloy queue object instansiated) it will return it, if not will create one
     public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(m_context.getApplicationContext());

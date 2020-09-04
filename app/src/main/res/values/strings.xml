@@ -9,7 +9,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="slogan">"A Running App for Runners"</string>
+    <string name="slogan">"A Running App for finding events"</string>
 
 
     <string name="title_activity_sign_up">SignUp</string>
@@ -36,6 +36,22 @@
     <string name="my_profile_menu_title">My Profile</string>
     <string name="feature_coming_soon">Feature Coming Soon</string>
     <string name="logout">Logout</string>
+    <string name="enter_email_hint">Enter Email</string>
+    <string name="email">Email</string>
+    <string name="enter_surname_hint">Enter surname</string>
+    <string name="surname">Surname</string>
+    <string name="enter_name_hint">Enter first name</string>
+    <string name="firstname_hint">First Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dash_logo">Dash Logo</string>
+    <string name="password">Password</string>
+    <string name="enter_password_hint">Enter Password</string>
+    <string name="terms_conditions_text">By clicking continue, you are thereby agreeing to terms sand conditions specified</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="agree">Agree</string>
+    <string name="submit">Submit</string>
+    <string name="dash_icon">Dash Icon</string>
+    <string name="actual_ts_and_cs">bler bler legal stuff. Please Don\'t Sue me…</string>
 
 
 </resources>

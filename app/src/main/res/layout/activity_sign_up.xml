@@ -26,7 +26,7 @@
                 android:id="@+id/back_nav"
                 android:layout_width="38dp"
                 android:layout_height="34dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/abc_vector_test" />
@@ -37,9 +37,8 @@
                 android:layout_height="46dp"
                 android:layout_centerInParent="true"
                 android:background="#00FFFFFF"
-                app:srcCompat="@drawable/white_logo" />
-
-
+                app:srcCompat="@drawable/white_logo"
+                android:contentDescription="@string/dash_logo" />
         </RelativeLayout>
 
     <RelativeLayout
@@ -48,15 +47,14 @@
         android:layout_height="505dp"
         android:layout_below="@id/nav_toolbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-      >
+        android:layout_marginTop="43dp">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/diaglogue_box_border"
             android:textSize="30sp"
@@ -77,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="Firstname"
+                android:text="@string/firstname_hint"
                 android:textColor="@color/diaglogue_box_border"
                 android:textSize="18sp" />
 
@@ -86,11 +84,9 @@
                 android:id="@+id/editFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-
                 android:ems="10"
-                android:gravity="left"
-                android:hint="Enter name"
+                android:gravity="start"
+                android:hint="@string/enter_name_hint"
                 android:inputType="textPersonName"
                 android:textColorHighlight="@color/colorPrimaryDark"
                 android:textColorLink="@color/colorPrimaryDark" />
@@ -101,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="Surname"
+                android:text="@string/surname"
                 android:textColor="@color/diaglogue_box_border"
                 android:textSize="18sp" />
 
@@ -113,11 +109,12 @@
 
 
                 android:ems="10"
-                android:gravity="left"
-                android:hint="Enter surnamename"
+                android:gravity="start"
+                android:hint="@string/enter_surname_hint"
                 android:inputType="textPersonName"
                 android:textColorHighlight="@color/colorPrimaryDark"
-                android:textColorLink="@color/colorPrimaryDark" />
+                android:textColorLink="@color/colorPrimaryDark"
+                android:autofillHints="@string/enter_surname_hint" />
 
 
             <TextView
@@ -125,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="Email"
+                android:text="@string/email"
                 android:textColor="@color/diaglogue_box_border"
                 android:textSize="18sp" />
 
@@ -135,8 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="left"
-                android:hint="Enter Email"
+                android:gravity="start"
+                android:hint="@string/enter_email_hint"
                 android:inputType="textEmailAddress"
                 android:textColorHighlight="@color/colorPrimaryDark"
                 android:textColorLink="@color/colorPrimaryDark" />
@@ -154,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:text="Password"
+                    android:text="@string/password"
                     android:textColor="@color/diaglogue_box_border"
                     android:textSize="18sp" />
 
@@ -177,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="start"
-                android:hint="Enter Password"
+                android:hint="@string/enter_password_hint"
                 android:inputType="textPassword"
                 android:textColorHighlight="@color/colorPrimaryDark"
                 android:textColorLink="@color/colorPrimaryDark"
@@ -198,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="By clicking continue, you are thereby agreeing to terms sand condistions Specified"
+                android:text="@string/terms_conditions_text"
                 android:textAlignment="textStart"
                 app:autoSizeTextType="uniform" />
 
@@ -209,7 +206,7 @@
                 android:layout_gravity="bottom"
                 android:background="#00FFFFFF"
                 android:fontFamily="@font/montserrat"
-                android:text="Terms and conditions"
+                android:text="@string/terms_and_conditions"
                 android:textColor="#03A9F4"
                 android:textColorLink="#03A9F4" />
 
@@ -219,26 +216,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/montserrat"
-                android:text="Agree" />
+                android:text="@string/agree" />
 
             <Button
                 android:id="@+id/signup_submit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/button_shape"
                 android:fontFamily="@font/montserrat"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:textColor="@color/white" />
         </LinearLayout>
-
-
     </RelativeLayout>
-
-
-
-        </RelativeLayout>
+</RelativeLayout>
 
 
 

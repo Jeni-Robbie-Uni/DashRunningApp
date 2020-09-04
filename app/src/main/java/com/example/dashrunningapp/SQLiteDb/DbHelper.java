@@ -42,12 +42,13 @@ import java.io.OutputStream;
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
 
+        //checks if db already exists and if not create one
         public void createDb(){
             boolean dbExist = checkDbExist();   //checks if db already exists on device
 
             if(!dbExist){
-                this.getReadableDatabase();
-                copyDatabase();
+                this.getReadableDatabase(); //get locked sqlite default database to get definition of table etc
+                copyDatabase(); //make edititable copy of root db
             }
         }
 
@@ -59,6 +60,7 @@ import java.io.OutputStream;
                 String path = DATABASE_PATH + DATABASE_NAME;
                 sqLiteDatabase = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
             } catch (Exception ex){
+                //consume exception
             }
             //if database instance exists
             if(sqLiteDatabase != null){
@@ -68,16 +70,17 @@ import java.io.OutputStream;
             return false;
         }
 
+        //gets db files reads byte by byte and copies over to specified location
         private void copyDatabase(){
             try {
-                InputStream inputStream = context.getAssets().open(DATABASE_NAME);
-                String outFileName = DATABASE_PATH + DATABASE_NAME;
-                OutputStream outputStream = new FileOutputStream(outFileName);
+                InputStream inputStream = context.getAssets().open(DATABASE_NAME);      //reads source database
+                String outFileName = DATABASE_PATH + DATABASE_NAME;     //location and name of new db file
+                OutputStream outputStream = new FileOutputStream(outFileName);  //writer of the new db
 
-                byte[] b = new byte[1024];
+                byte[] b = new byte[1024];  //define how much to read at a time
                 int length;
                 while ((length = inputStream.read(b)) > 0){
-                    outputStream.write(b, 0, length);
+                    outputStream.write(b, 0, length);       //copy bytes over to destination database
                 }
                 outputStream.flush();
                 outputStream.close();
@@ -87,12 +90,13 @@ import java.io.OutputStream;
             }
 
         }
+    //open instance of database
         private SQLiteDatabase openDatabase(){
             String path = DATABASE_PATH + DATABASE_NAME;
             db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
             return db;
         }
-
+        //close database
         public void close(){
             if(db != null){
                 db.close();

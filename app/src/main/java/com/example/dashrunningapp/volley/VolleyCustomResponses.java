@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.example.dashrunningapp.Misc.ErrorStrings;
 import com.example.dashrunningapp.SQLiteDb.DbHelper;
 import com.example.dashrunningapp.activity.MainActivity;
 import com.example.dashrunningapp.activity.login;
@@ -22,61 +23,47 @@ import com.example.dashrunningapp.models.UserDetails;
 
 public class VolleyCustomResponses {
 
+    //general error response with custom toast messages
     public static void  errorResponse(VolleyError error, Context context) {
 
         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-            Log.e("Error",error.toString());
+            Toast.makeText(context, ErrorStrings.getTimeoutError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof AuthFailureError) {
-            Toast.makeText(context,
-                    "no author",
-                    Toast.LENGTH_LONG).show();
-            Log.e("Error",error.toString());
+            Toast.makeText(context, ErrorStrings.getLoginFailureError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof ServerError) {
-            Toast.makeText(context,
-                    "servererror",
-                    Toast.LENGTH_LONG).show();
-            Log.e("ServerError",error.toString());
-
+            Toast.makeText(context, ErrorStrings.getServerError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof NetworkError) {
-            Toast.makeText(context,
-                    "networkerror",
-                    Toast.LENGTH_LONG).show();
-            Log.e("ServerError",error.toString());
+            Toast.makeText(context, ErrorStrings.getNetworkError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof ParseError) {
-            Log.e("ServerError",error.toString());
+            Toast.makeText(context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();
         }
+        Log.e("Error",error.toString());
     }
 
+    //Overloaded above function to deal with email account error only seen on sign up
     public static void  errorResponse(VolleyError error, Context context, EditText email) {
 
 
         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-            Log.e("Error",error.toString());
-            Toast.makeText(context, "Connection Error: Please try to register again", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, ErrorStrings.getTimeoutError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof AuthFailureError) {
-            Toast.makeText(context, "Unauthorised Access Error", Toast.LENGTH_LONG).show();
-            Log.e("Error",error.toString());
+            Toast.makeText(context, ErrorStrings.getLoginFailureError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof ServerError) {
-            //TODO
             if (error.networkResponse.statusCode == 409) {
                 email.setText("");
-                email.setError("Account already in Use");
+                email.setError(ErrorStrings.getAccountTakenError());
 
             } else {
-                Toast.makeText(context, "Server Error: Please try and Register account again", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, ErrorStrings.getServerError(), Toast.LENGTH_LONG).show();
             }
-
         } else if (error instanceof NetworkError) {
-            Toast.makeText(context, "Network Error: Please try and Register account again", Toast.LENGTH_LONG).show();
-            Log.e("ServerError",error.toString());
+            Toast.makeText(context, ErrorStrings.getNetworkError(), Toast.LENGTH_LONG).show();
         } else if (error instanceof ParseError) {
-            Log.e("Error",error.toString());
-            Toast.makeText(context, "Error: Please try and Register account again", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(context, ErrorStrings.getUnrecoverableError(), Toast.LENGTH_LONG).show();
         }
-
+        Log.e("Error",error.toString());
     }
-
+    //On successful volley response stores token in authentication object
     public static  Response.Listener<String> GenerateTokenResponse(final Context m_context){
         return new Response.Listener<String>() {
             @Override
@@ -88,6 +75,7 @@ public class VolleyCustomResponses {
             }
         };
     }
+    //On successful volley response stores token in authentication object and credential in the database helper if registering
     public static  Response.Listener<String> GenerateTokenResponse(final Context m_context, final UserDetails current_user){
         return new Response.Listener<String>() {
             @Override
@@ -102,6 +90,8 @@ public class VolleyCustomResponses {
             }
         };
     }
+
+    //Error listeners to call specific error handlers depending on the information above//
     public static Response.ErrorListener GenerateTokenError(final Context m_context) {
         return new Response.ErrorListener() {
             @Override
@@ -113,6 +103,7 @@ public class VolleyCustomResponses {
             }
         };
     }
+    //Error listeners to call specific error handlers depending on the information above//
     public static Response.ErrorListener GenerateSignUpError(final Context m_context, final EditText email) {
         return new Response.ErrorListener() {
             @Override

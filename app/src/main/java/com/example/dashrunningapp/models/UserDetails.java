@@ -1,35 +1,31 @@
 package com.example.dashrunningapp.models;
 
+
+//Container for user details
 public class UserDetails {
-    String firstname;
-    String email;
-    String password;
-    String surname;
+    private String firstname;
+    private String email;
+    private String password;
+    private String surname;
 
 
 
 //this should
     public UserDetails(String userFirsname, String userSurnmae, String userEmail, String userPassword) {
-        firstname=userFirsname;
-        surname=userSurnmae;
-        email=userEmail;
-        password=userPassword;
+        this.firstname=userFirsname;
+        this.surname=userSurnmae;
+        this.email=userEmail;
+        this.password=userPassword;
     }
 
     public UserDetails() {
+
     }
     public UserDetails( String userEmail, String userPassword) {
         email=userEmail;
         password=userPassword;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getFName() {
-            return this.firstname;
-        }
 
     public String getPassword() {
         return this.password;
@@ -47,6 +43,14 @@ public class UserDetails {
         this.email = email;
     }
 
+    public String getFirstname() {
+        return this.firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
     public String getSurname() {
         return this.surname;
     }
@@ -54,6 +58,8 @@ public class UserDetails {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+
 
 
 

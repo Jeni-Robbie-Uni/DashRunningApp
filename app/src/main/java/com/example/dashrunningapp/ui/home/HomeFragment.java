@@ -17,16 +17,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.dashrunningapp.R;
 import com.example.dashrunningapp.activity.MainActivity;
-
+//Fragment class manges homepage that will contain statistical inform
 public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        textView.setText("Coming Soon");
+        View root = inflater.inflate(R.layout.fragment_home, container, false);  //Show profile layout
         return root;
+
 
     }
 }
