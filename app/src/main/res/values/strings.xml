@@ -33,6 +33,9 @@
     <string name="distance">Distance</string>
     <string name="charDash">-</string>
     <string name="elavation">Elavation</string>
+    <string name="my_profile_menu_title">My Profile</string>
+    <string name="feature_coming_soon">Feature Coming Soon</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

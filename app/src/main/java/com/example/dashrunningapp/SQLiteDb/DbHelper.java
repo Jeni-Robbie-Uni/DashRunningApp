@@ -51,6 +51,7 @@ import java.io.OutputStream;
             }
         }
 
+
         private boolean checkDbExist(){
             SQLiteDatabase sqLiteDatabase = null;
             //try and open the database
@@ -66,7 +67,7 @@ import java.io.OutputStream;
             }
             return false;
         }
-//remove?
+
         private void copyDatabase(){
             try {
                 InputStream inputStream = context.getAssets().open(DATABASE_NAME);
@@ -109,7 +110,9 @@ import java.io.OutputStream;
         }
         //if a user exists already when adding another i.e. log in as somone else call this function to delete all other stored users
         public void DropUserTable(){
+            db = openDatabase();
             db.execSQL("DROP TABLE IF EXISTS User;");
+            db.close();
         }
 
         //Checks to see if user is in table and if so returns user object

@@ -18,11 +18,7 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
     private List<EventDTO> mDataset;
     private Context Context;
-    //private final View.OnClickListener mOnClickListener = new MyOnClickListener();
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView textName, textCity, textDate;
@@ -60,8 +56,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+        // get element from your dataset at this position
+        // replace the contents of the view with that element
         final EventDTO event = mDataset.get(position);
         holder.setDetails(event);
 

@@ -2,6 +2,7 @@ package com.example.dashrunningapp.ui.track;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -34,7 +35,7 @@ public class TrackFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
 
 
@@ -58,6 +59,7 @@ public class TrackFragment extends Fragment {
             @Override
             public void onClick(View view) {
                if (play) {
+
                    btn_play.setBackgroundResource(R.drawable.ic_stop);
                    txt_play.setText("Stop");
                    play=false;

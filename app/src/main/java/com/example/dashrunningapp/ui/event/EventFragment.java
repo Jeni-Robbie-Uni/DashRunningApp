@@ -1,14 +1,12 @@
 package com.example.dashrunningapp.ui.event;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,8 +31,8 @@ import com.example.dashrunningapp.R;
 import com.example.dashrunningapp.models.EventDTO;
 import com.example.dashrunningapp.volley.VolleyQueue;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -46,8 +44,6 @@ public class EventFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-
-    private GsonBuilder gsonBuilder;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -102,8 +98,7 @@ public class EventFragment extends Fragment {
                 @Override
                 public void onResponse(String response) {
                     // Get the object Type for a List of EventDTO objects from the system to pass into gson for conversion
-                    Type listType = new TypeToken<List<EventDTO>>() {
-                    }.getType();
+                    Type listType = new TypeToken<List<EventDTO>>() {}.getType();
                     Gson gson = new Gson();
                     //converts json sto objects of event type
                     List<EventDTO> list = gson.fromJson(response, listType);
@@ -147,26 +142,7 @@ public class EventFragment extends Fragment {
 
     }
 
-
-    private void OnGPS() {
-        final Context m_context = getContext();
-        final AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
-        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-
+//clean up longitude and latiutde as object
     private Double getLongitude(LocationManager locationManager) {
         final Context m_context = getContext();
         final Activity m_activity = getActivity();

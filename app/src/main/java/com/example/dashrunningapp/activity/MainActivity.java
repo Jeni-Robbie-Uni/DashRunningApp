@@ -1,9 +1,13 @@
 package com.example.dashrunningapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.dashrunningapp.R;
+import com.example.dashrunningapp.SQLiteDb.DbHelper;
+import com.example.dashrunningapp.ui.profile.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -19,7 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    //Create instance of database helper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_track, R.id.nav_event)
+                R.id.nav_home, R.id.nav_track, R.id.nav_event, R.id.nav_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -41,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-    }
+
+}
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,4 +63,20 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                DbHelper databaseHelper = new DbHelper(MainActivity.this);
+                databaseHelper.DropUserTable();
+                Intent intentLogin = new Intent(this, login.class);
+                startActivity(intentLogin);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
